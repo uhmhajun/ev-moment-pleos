@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EV MOMENT — 충전하는 시간까지, 내 시간으로 (현대자동차 본사 기준 Pleos 시연 목업)</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Asta Sans"', '"Pretendard"', '"Noto Sans KR"', 'Inter', 'sans-serif'],
+            mono: ['Inter', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* =========================================================================
+       Pleos Connect Minimalist High-Visibility Automotive UI Theme
+       - Clean Dual-Tone (Pure White Driving View + Deep Navy/Dark App Window)
+       - Zero Visual Clutter: Large Typography, Generous Whitespace, Pill Controls
+       ========================================================================= */
+    :root {
+      /* Night Mode (Default): Calm Charcoal-Slate & Muted Hyundai Steel-Blue */
+      --pleos-outer-bg: #0B0E13;
+      --pleos-bezel-border: #2A323F;
+      --pleos-status-bg: #11151C;
+      --pleos-driving-bg: #141922;
+      --pleos-app-bg: #10141B;
+      --pleos-card-bg: #181E27;
+      --pleos-card-elevated: #1F2632;
+      --pleos-card-active: rgba(91, 143, 185, 0.16);
+      --pleos-border: rgba(255, 255, 255, 0.07);
+      --pleos-accent: #5B8FB9;
+      --pleos-text-main: #E2E8F0;
+      --pleos-text-sub: #94A3B8;
+      /* Map specific variables (Night) */
+      --map-land: #161B24;
+      --map-block: #1D232F;
+      --map-park: #172824;
+      --map-water: #132538;
+      --map-road-minor: #262E3D;
+      --map-road-major: #333D4F;
+      --map-road-highway: #3E4A5E;
+      --map-text: #94A3B8;
+    }
+
+    html.pleos-day {
+      /* Day Mode: Warm Alabaster & Soft Stone-Gray (Low Glare, Calm Hyundai Native Look) */
+      --pleos-outer-bg: #D6DCE5;
+      --pleos-bezel-border: #94A3B8;
+      --pleos-status-bg: #F8FAFC;
+      --pleos-driving-bg: #F8FAFC;
+      --pleos-app-bg: #EEF2F6;
+      --pleos-card-bg: #FFFFFF;
+      --pleos-card-elevated: #F1F5F9;
+      --pleos-card-active: rgba(59, 118, 168, 0.11);
+      --pleos-border: rgba(15, 23, 42, 0.08);
+      --pleos-accent: #3B76A8;
+      --pleos-text-main: #1E293B;
+      --pleos-text-sub: #64748B;
+      /* Map specific variables (Day) */
+      --map-land: #EAECEF;
+      --map-block: #E1E4E8;
+      --map-park: #D6E6DC;
+      --map-water: #C8DFEA;
+      --map-road-minor: #F8FAFC;
+      --map-road-major: #FFFFFF;
+      --map-road-highway: #FDE68A;
+      --map-text: #475569;
+    }
+
+    /* Calm tone overrides for bright Tailwind utility classes */
+    .pleos-shell-frame .text-sky-400,
+    .pleos-shell-frame .text-cyan-400 {
+      color: #6EA1C8 !important;
+    }
+    .pleos-shell-frame .text-sky-300,
+    .pleos-shell-frame .text-cyan-300 {
+      color: #8BB6D6 !important;
+    }
+    .pleos-shell-frame .bg-sky-500,
+    .pleos-shell-frame .bg-sky-400,
+    .pleos-shell-frame .bg-cyan-400 {
+      background-color: #5B8FB9 !important;
+      color: #F8FAFC !important;
+    }
+    .pleos-shell-frame .text-emerald-400,
+    .pleos-shell-frame .text-emerald-300 {
+      color: #5EAB8E !important;
+    }
+    .pleos-shell-frame .bg-emerald-500 {
+      background-color: #4D967B !important;
+    }
+    .pleos-shell-frame .text-amber-400,
+    .pleos-shell-frame .text-amber-300 {
+      color: #D49B4B !important;
+    }
+    .pleos-shell-frame .bg-amber-400 {
+      background-color: #C98F3E !important;
+      color: #0F172A !important;
+    }
+    .pleos-shell-frame .text-rose-400,
+    .pleos-shell-frame .text-rose-300 {
+      color: #D27676 !important;
+    }
+
+    body {
+      font-family: 'Asta Sans', 'Pretendard', 'Noto Sans KR', 'Inter', sans-serif;
+      background-color: var(--pleos-outer-bg);
+      color: var(--pleos-text-main);
+      line-height: 1.5;
+      overflow-x: hidden;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .pleos-shell-frame {
+      background-color: var(--pleos-app-bg);
+      border: 3px solid var(--pleos-bezel-border);
+      box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.65);
+    }
+
+    .pleos-status-bar {
+      background-color: var(--pleos-status-bg);
+      border-bottom: 1px solid var(--pleos-border);
+    }
+
+    .pleos-driving-view {
+      background-color: var(--pleos-driving-bg);
+      border-right: 1px solid var(--pleos-border);
+    }
+
+    .pleos-app-window {
+      background-color: var(--pleos-app-bg);
+    }
+
+    .pleos-card {
+      background-color: var(--pleos-card-bg);
+      border: 1px solid var(--pleos-border);
+      border-radius: 18px;
+      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .pleos-card:hover {
+      border-color: rgba(14, 165, 233, 0.5);
+    }
+
+    .pleos-card-active {
+      background-color: var(--pleos-card-active) !important;
+      border: 2px solid var(--pleos-accent) !important;
+      box-shadow: 0 8px 24px -4px rgba(14, 165, 233, 0.22);
+    }
+
+    /* Clean Day Mode overrides inside the Pleos Bezel */
+    html.pleos-day .pleos-shell-frame .text-white {
+      color: #0F172A !important;
+    }
+    html.pleos-day .pleos-shell-frame .text-slate-200,
+    html.pleos-day .pleos-shell-frame .text-slate-300 {
+      color: #334155 !important;
+    }
+    html.pleos-day .pleos-shell-frame .text-slate-400 {
+      color: #64748B !important;
+    }
+    html.pleos-day .pleos-shell-frame .bg-slate-900,
+    html.pleos-day .pleos-shell-frame .bg-slate-900\/60,
+    html.pleos-day .pleos-shell-frame .bg-slate-900\/80,
+    html.pleos-day .pleos-shell-frame .bg-slate-900\/90,
+    html.pleos-day .pleos-shell-frame .bg-slate-950,
+    html.pleos-day .pleos-shell-frame .bg-slate-950\/70 {
+      background-color: #F8FAFC !important;
+      border-color: #E2E8F0 !important;
+    }
+    html.pleos-day .pleos-shell-frame .bg-slate-800 {
+      background-color: #E2E8F0 !important;
+      color: #0F172A !important;
+      border-color: #CBD5E1 !important;
+    }
+    html.pleos-day .pleos-shell-frame .border-slate-800,
+    html.pleos-day .pleos-shell-frame .border-slate-800\/80,
+    html.pleos-day .pleos-shell-frame .border-slate-800\/90,
+    html.pleos-day .pleos-shell-frame .border-slate-700,
+    html.pleos-day .pleos-shell-frame .border-slate-700\/60,
+    html.pleos-day .pleos-shell-frame .border-slate-700\/70 {
+      border-color: #E2E8F0 !important;
+    }
+    html.pleos-day .pleos-shell-frame .text-cyan-400,
+    html.pleos-day .pleos-shell-frame .text-cyan-300,
+    html.pleos-day .pleos-shell-frame .text-sky-400 {
+      color: #0284C7 !important;
+    }
+    html.pleos-day .pleos-shell-frame .text-emerald-400,
+    html.pleos-day .pleos-shell-frame .text-emerald-300 {
+      color: #059669 !important;
+    }
+    html.pleos-day .pleos-shell-frame .text-amber-400,
+    html.pleos-day .pleos-shell-frame .text-amber-300 {
+      color: #D97706 !important;
+    }
+    html.pleos-day .pleos-shell-frame .text-rose-400,
+    html.pleos-day .pleos-shell-frame .text-rose-300 {
+      color: #E11D48 !important;
+    }
+    /* Keep Bottom GNB Dock dark like authentic Pleos OS */
+    html.pleos-day .pleos-gnb-dock .text-white {
+      color: #F8FAFC !important;
+    }
+    html.pleos-day .pleos-gnb-dock .text-slate-300,
+    html.pleos-day .pleos-gnb-dock .text-slate-400 {
+      color: #94A3B8 !important;
+    }
+    html.pleos-day .pleos-gnb-dock .bg-slate-900 {
+      background-color: #1E293B !important;
+      border-color: #334155 !important;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.35);
+      border-radius: 9999px;
+    }
+    input[type="range"] {
+      accent-color: #0EA5E9;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-sky-500 selection:text-white">
+
+  <!-- ==================== SLIM EXTERNAL DEMO CONTROLLER BAR (Outside Vehicle Bezel) ==================== -->
+  <header class="w-full bg-slate-950 border-b border-slate-800/80 px-4 py-2 sticky top-0 z-40">
+    <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5">
+        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">
+          현대자동차 양재 본사 기준 데모
+        </span>
+        <span class="text-xs text-slate-400 hidden xl:inline">
+          브라우저 UI 시연 목업 · 화면 내 차량 상태 및 주변 매장(양재동) 정보는 시연용 데모 데이터입니다
+        </span>
+      </div>
+
+      <!-- Compact Demo Controls -->
+      <div class="flex flex-wrap items-center gap-1.5">
+        <div class="flex items-center bg-slate-900 border border-slate-700 rounded-lg p-0.5 text-xs">
+          <button id="btnThemeNight" type="button" class="px-2.5 py-1 rounded-md font-bold bg-sky-500 text-slate-950 transition">
+            🌙 야간 (Dark)
+          </button>
+          <button id="btnThemeDay" type="button" class="px-2.5 py-1 rounded-md font-bold text-slate-300 hover:text-white transition">
+            ☀️ 주간 (Light)
+          </button>
+        </div>
+
+        <button id="btnToggleWindowMode" type="button" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-900 text-slate-200 border border-slate-700 hover:border-sky-400 transition">
+          📐 레이아웃: 스플릿 뷰 (Driving+App)
+        </button>
+
+        <div class="flex items-center bg-slate-900 border border-slate-700 rounded-lg p-0.5 text-xs">
+          <button id="btnSdkModeAuto" type="button" class="px-2.5 py-1 rounded-md font-semibold bg-sky-500 text-slate-950 transition">
+            차량 데이터 시연
+          </button>
+          <button id="btnSdkModeManual" type="button" class="px-2.5 py-1 rounded-md font-semibold text-slate-300 hover:text-white transition">
+            수동 입력 (Fallback)
+          </button>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-1 bg-slate-900 border border-slate-800 rounded-lg px-2 py-1 text-xs">
+          <button id="btnSimShorten" type="button" class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 hover:bg-rose-500/30 font-semibold transition">
+            ⚡ -12분 단축 (출력상승)
+          </button>
+          <button id="btnSimExtend" type="button" class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 font-semibold transition">
+            ⏳ +15분 지연 (전력분배)
+          </button>
+          <button id="btnSimReset" type="button" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+            초기화 (40분)
+          </button>
+        </div>
+
+        <button id="btnOpenProposalModal" type="button" class="px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition">
+          제출용 기획서 & SDK 명세
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== PLEOS CONNECT 17" WIDE DISPLAY FRAME ==================== -->
+  <main class="flex-1 w-full max-w-[1600px] mx-auto px-2 sm:px-6 py-3 flex flex-col justify-center">
+    <div class="pleos-shell-frame w-full rounded-[28px] overflow-hidden flex flex-col justify-between">
+
+      <!-- 1. PLEOS STATUS BAR (Clean, Uncluttered Automotive Top Bar) -->
+      <div class="pleos-status-bar w-full px-5 py-2.5 flex items-center justify-between text-xs select-none">
+        <!-- Left: Gear Tell-tale + Gleo AI Pill + Demo Status -->
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-1.5 bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-700/70 font-mono font-bold" title="시연용 기어 상태">
+            <span class="text-sky-400 text-sm font-black">P</span>
+            <span class="text-slate-500">R</span>
+            <span class="text-slate-500">N</span>
+            <span class="text-slate-500">D</span>
+            <span class="text-[10px] font-sans font-normal text-slate-400 ml-1">시연상태</span>
+          </div>
+
+          <button id="btnGleoVoiceDemo" type="button" class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-500/15 border border-sky-500/30 text-sky-400 font-bold hover:bg-sky-500/25 transition">
+            <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+            <span>Gleo AI</span>
+            <span id="gleoPromptText" class="font-normal text-slate-300 hidden sm:inline">"충전 중 다녀올 만한 곳 추천해 줘"</span>
+          </button>
+
+          <span id="sdkStatusBadge" class="hidden md:inline-flex items-center px-2.5 py-0.5 rounded-md bg-slate-800/90 text-slate-300 text-[11px] font-medium">
+            SDK 미연동 · 데모 데이터
+          </span>
+        </div>
+
+        <!-- Right: HQ Station Location, Weather, Clock -->
+        <div class="flex items-center gap-4">
+          <span id="topWeatherInfo" class="hidden md:inline text-slate-300 font-semibold">
+            📍 현대자동차 본사 충전소 (서초구 헌릉로 12) · 16°C
+          </span>
+          <span id="topSystemClock" class="text-sm font-extrabold font-mono text-white tracking-tight">15:40 (시연시각)</span>
+        </div>
+      </div>
+
+      <!-- 2. PLEOS MAIN SPLIT VIEW: LEFT DRIVING VIEW (4 Cols) + RIGHT APP WINDOW (8 Cols) -->
+      <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 min-h-[580px]">
+
+        <!-- ==================== LEFT: PLEOS DRIVING VIEW (Clean Telemetry & Time-Budget) ==================== -->
+        <aside id="pleosDrivingViewPane" class="pleos-driving-view lg:col-span-4 p-5 sm:p-6 flex flex-col justify-between gap-5">
+
+          <div class="space-y-5">
+            <!-- Station & Companion Badge -->
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-sky-400 block">HYUNDAI HQ CHARGING HUB</span>
+                <h2 class="text-base font-extrabold text-white mt-0.5">양재 본사 충전소 (헌릉로 12)</h2>
+              </div>
+              <span id="companionBadge" class="px-3 py-1 rounded-full text-xs font-bold bg-slate-800 text-slate-200 border border-slate-700">
+                🧑 나 혼자
+              </span>
+            </div>
+
+            <!-- HERO METRIC: Remaining Charging Time (Big, Clean, Uncluttered) -->
+            <div class="pleos-card p-5 space-y-4">
+              <div class="flex items-start justify-between">
+                <div>
+                  <span class="text-xs font-semibold text-slate-400 block">가용 충전 시간 (시연값)</span>
+                  <div class="flex items-baseline gap-1.5 mt-1">
+                    <span id="leftAvailableMinutes" class="text-5xl font-black text-sky-400 font-mono tracking-tight">40</span>
+                    <span class="text-xl font-extrabold text-white">분</span>
+                    <span id="leftDeltaBadge" class="hidden ml-1.5 px-2 py-0.5 rounded-md text-xs font-bold"></span>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="text-xs font-semibold text-slate-400 block">권장 차량 복귀</span>
+                  <span id="leftReturnDeadline" class="text-2xl font-extrabold text-emerald-400 font-mono block mt-1">16:12</span>
+                  <span class="text-[11px] text-slate-400">완료 예상 <span id="leftTargetEndTime" class="font-mono font-semibold text-slate-300">16:20</span></span>
+                </div>
+              </div>
+
+              <!-- Hyundai IONIQ 6 N Streamliner Charging Graphic & Battery Status -->
+              <div class="pt-3 border-t border-slate-800/80 space-y-2.5">
+                <div class="relative rounded-2xl bg-slate-950/80 border border-slate-800/90 px-3.5 py-2.5 flex items-center justify-between overflow-hidden">
+                  <!-- N Performance Blue & Red Subtle Underbody Glow -->
+                  <div class="pointer-events-none absolute -bottom-3 left-10 w-40 h-6 bg-sky-400/25 blur-xl rounded-full"></div>
+
+                  <!-- Stylized Hyundai IONIQ 6 N Graphic (Streamliner Arch + Swan-Neck Rear Wing + N Red Skirt) -->
+                  <svg class="w-44 h-16 shrink-0" viewBox="0 0 240 86" fill="none" aria-label="현대 아이오닉 6 N 충전 그래픽">
+                    <defs>
+                      <!-- N Performance Blue Body Gradient -->
+                      <linearGradient id="carBodyGrad" x1="24" y1="18" x2="215" y2="62" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#89B6E5" stop-opacity="0.88"/>
+                        <stop offset="55%" stop-color="#5B9BD5" stop-opacity="0.72"/>
+                        <stop offset="100%" stop-color="#2B6CB0" stop-opacity="0.85"/>
+                      </linearGradient>
+                      <!-- High-Voltage E-GMP Battery Pack Gradient -->
+                      <linearGradient id="batteryCellGrad" x1="72" y1="52" x2="168" y2="52" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#0EA5E9"/>
+                        <stop offset="100%" stop-color="#10B981"/>
+                      </linearGradient>
+                    </defs>
+
+                    <!-- Ground Shadow -->
+                    <ellipse cx="126" cy="73" rx="92" ry="5" fill="#0EA5E9" fill-opacity="0.18"/>
+
+                    <!-- E-pit Charger Pedestal (Right Rear Charging Port Connection) -->
+                    <rect x="220" y="18" width="12" height="50" rx="3" fill="#1E293B" stroke="#38BDF8" stroke-width="1.5"/>
+                    <rect x="223" y="24" width="6" height="12" rx="1" fill="#0EA5E9"/>
+                    <path d="M220 46 C210 46, 204 54, 194 49" stroke="#10B981" stroke-width="2.2" stroke-dasharray="4 2.5"/>
+
+                    <!-- IONIQ 6 N Swan-Neck GT Rear Wing (Signature N Feature) -->
+                    <path d="M188 33 L197 16 L207 16" stroke="#CBD5E1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M192 14 L214 17 L212 20 L191 17 Z" fill="#0F172A" stroke="#EF4444" stroke-width="1.5"/>
+
+                    <!-- IONIQ 6 N Ducktail Spoiler Lip -->
+                    <path d="M196 38 L211 36 L209 41 Z" fill="#1E293B" stroke="#94A3B8" stroke-width="1"/>
+
+                    <!-- Electrified Streamliner Single-Curved Arch Body Silhouette -->
+                    <path d="M22 55 C24 46, 36 40, 52 36 C74 21, 102 17, 134 18 C164 19, 186 28, 205 40 C210 44, 212 52, 209 58 L24 58 C21 58, 21 56, 22 55 Z" fill="url(#carBodyGrad)" stroke="#BAE6FD" stroke-width="1.8" stroke-linejoin="round"/>
+
+                    <!-- Streamliner Arched Glasshouse (Window Line) -->
+                    <path d="M60 36 C78 24, 102 21, 130 22 C154 23, 174 29, 186 38 L60 36 Z" fill="#090D16" fill-opacity="0.88" stroke="#7DD3FC" stroke-width="1.2"/>
+                    <line x1="112" y1="21.5" x2="108" y2="37" stroke="#475569" stroke-width="1.8"/>
+                    <line x1="152" y1="24" x2="150" y2="37.5" stroke="#475569" stroke-width="1.5"/>
+
+                    <!-- Digital Side Mirror (DSM) Camera Wing -->
+                    <rect x="65" y="34" width="7" height="3.5" rx="1.5" fill="#0F172A" stroke="#BAE6FD" stroke-width="1"/>
+
+                    <!-- Front Aggressive N Splitter & Parametric Pixel Headlamp -->
+                    <path d="M16 58 L30 58 L27 54 L18 55 Z" fill="#0F172A" stroke="#EF4444" stroke-width="1.5"/>
+                    <rect x="27" y="44" width="4" height="3" fill="#E0F2FE"/>
+                    <rect x="32" y="43" width="4" height="3" fill="#E0F2FE"/>
+                    <rect x="37" y="42" width="4" height="3" fill="#38BDF8"/>
+
+                    <!-- Rear Parametric Pixel Lamp Bar -->
+                    <line x1="198" y1="43" x2="210" y2="43" stroke="#F43F5E" stroke-width="3" stroke-linecap="round" stroke-dasharray="2.5 1.5"/>
+
+                    <!-- N Signature Luminous Orange/Red Side Skirt & Rear Diffuser Line -->
+                    <line x1="20" y1="59" x2="210" y2="59" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round"/>
+
+                    <!-- E-GMP Underbody Battery Pack Gauge -->
+                    <rect x="78" y="48" width="84" height="7" rx="3.5" fill="#090D16" stroke="#334155" stroke-width="1"/>
+                    <rect x="80" y="49.5" width="58" height="4" rx="2" fill="url(#batteryCellGrad)"/>
+
+                    <!-- 21-inch Forged N Wheels + Red N Brake Calipers -->
+                    <circle cx="58" cy="58" r="12" fill="#090D16" stroke="#CBD5E1" stroke-width="2.2"/>
+                    <circle cx="58" cy="58" r="8" fill="none" stroke="#64748B" stroke-width="1" stroke-dasharray="3 2"/>
+                    <path d="M52 54 A6 6 0 0 1 56 51" stroke="#EF4444" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="58" cy="58" r="3.5" fill="#E2E8F0"/>
+
+                    <circle cx="176" cy="58" r="12" fill="#090D16" stroke="#CBD5E1" stroke-width="2.2"/>
+                    <circle cx="176" cy="58" r="8" fill="none" stroke="#64748B" stroke-width="1" stroke-dasharray="3 2"/>
+                    <path d="M170 54 A6 6 0 0 1 174 51" stroke="#EF4444" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="176" cy="58" r="3.5" fill="#E2E8F0"/>
+
+                    <!-- Rear Quarter Charging Port Glow -->
+                    <circle cx="193" cy="48" r="3.5" fill="#10B981" stroke="#FFFFFF" stroke-width="1"/>
+                  </svg>
+
+                  <!-- Right Telemetry Summary inside Vehicle Graphic Card -->
+                  <div class="text-right space-y-1">
+                    <div class="flex items-center justify-end gap-1">
+                      <span class="px-1.5 py-0.5 rounded text-[10px] font-black italic bg-red-600 text-white leading-none">N</span>
+                      <span class="text-[11px] font-extrabold text-sky-300 tracking-tight">IONIQ 6 N</span>
+                    </div>
+                    <div class="text-xs font-bold text-slate-300">
+                      SoC <strong id="leftSocCurrent" class="text-white font-mono text-sm">34%</strong> → <strong id="leftSocTarget" class="text-sky-400 font-mono text-sm">80%</strong>
+                    </div>
+                    <div id="leftChargingPower" class="text-xs font-extrabold text-emerald-400 font-mono">⚡ 148 kW 시연</div>
+                  </div>
+                </div>
+
+                <!-- Battery Progress Bar -->
+                <div class="w-full h-3 bg-slate-900 rounded-full overflow-hidden p-0.5 border border-slate-700/60">
+                  <div id="leftSocBar" class="h-full rounded-full bg-gradient-to-r from-sky-500 to-emerald-400 transition-all duration-500" style="width: 68%"></div>
+                </div>
+              </div>
+
+              <!-- Manual Time Slider -->
+              <div id="manualInputBox" class="pt-2">
+                <div class="flex items-center justify-between text-xs mb-1.5">
+                  <label for="availableTimeSlider" class="text-slate-300 font-semibold flex items-center gap-1.5">
+                    <span>⏱️ 충전 시간 직접 조절</span>
+                    <span id="manualFallbackTag" class="px-1.5 py-0.5 bg-amber-500/20 text-amber-300 rounded text-[10px] font-bold hidden">수동 모드</span>
+                  </label>
+                  <span class="text-slate-400 font-mono text-[11px]">15분 ~ 75분</span>
+                </div>
+                <input id="availableTimeSlider" type="range" min="15" max="75" step="5" value="40" class="w-full cursor-pointer" />
+              </div>
+            </div>
+
+            <!-- Time-Budget Allocation Bar (Glanceable 4-Block Summary) -->
+            <div class="pleos-card p-4 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-white">선택한 활동 시간표</span>
+                <span id="leftBudgetStatus" class="text-xs font-bold text-emerald-400">✓ 안전 여유 12분 확보</span>
+              </div>
+
+              <div class="w-full h-3.5 bg-slate-900 rounded-full overflow-hidden flex border border-slate-700/60" id="leftSegmentedBar">
+                <div id="segWalkOut" class="bg-sky-500 h-full transition-all duration-300" style="width: 15%"></div>
+                <div id="segStay" class="bg-cyan-400 h-full transition-all duration-300" style="width: 50%"></div>
+                <div id="segWalkBack" class="bg-indigo-500 h-full transition-all duration-300" style="width: 15%"></div>
+                <div id="segBuffer" class="bg-emerald-500 h-full transition-all duration-300" style="width: 20%"></div>
+              </div>
+
+              <div class="grid grid-cols-4 gap-1.5 text-center text-[11px]">
+                <div class="bg-slate-900/80 rounded-xl py-2 px-1 border border-slate-800">
+                  <span class="text-slate-400 block">편도 도보</span>
+                  <strong id="legendWalkOut" class="text-white font-mono text-xs mt-0.5 block">4분</strong>
+                </div>
+                <div class="bg-slate-900/80 rounded-xl py-2 px-1 border border-slate-800">
+                  <span class="text-slate-400 block">매장 체류</span>
+                  <strong id="legendStay" class="text-cyan-300 font-mono text-xs mt-0.5 block">20분</strong>
+                </div>
+                <div class="bg-slate-900/80 rounded-xl py-2 px-1 border border-slate-800">
+                  <span class="text-slate-400 block">복귀 도보</span>
+                  <strong id="legendWalkBack" class="text-white font-mono text-xs mt-0.5 block">4분</strong>
+                </div>
+                <div class="bg-slate-900/80 rounded-xl py-2 px-1 border border-slate-800">
+                  <span class="text-slate-400 block">복귀 여유</span>
+                  <strong id="legendBuffer" class="text-emerald-400 font-mono text-xs mt-0.5 block">+12분</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Climate Demo Toggle & Mobile Sim Triggers -->
+          <div class="space-y-2.5">
+            <div class="flex lg:hidden items-center justify-between gap-1 bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs">
+              <span class="text-slate-400 font-semibold">시간 변동:</span>
+              <div class="flex gap-1">
+                <button id="btnSimShortenMobile" type="button" class="px-2 py-1 rounded bg-rose-500/20 text-rose-300 font-bold">-12분 단축</button>
+                <button id="btnSimExtendMobile" type="button" class="px-2 py-1 rounded bg-amber-500/20 text-amber-300 font-bold">+15분 지연</button>
+                <button id="btnSimResetMobile" type="button" class="px-2 py-1 rounded bg-slate-800 text-slate-300">초기화</button>
+              </div>
+            </div>
+
+            <div class="pleos-card px-4 py-3 flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold text-white">복귀 5분 전 공조 사전 가동 <span class="text-[11px] font-normal text-slate-400">(시연 토글)</span></div>
+                <div class="text-[11px] text-slate-400">공조 제어 화면 시연 · 차량 제어 미연동 (<span id="leftTargetTempText" class="font-mono font-semibold text-sky-400">22.0°C</span>)</div>
+              </div>
+              <button id="btnToggleClimate" type="button" aria-pressed="true" class="px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-sky-500 text-slate-950 transition">
+                시연 ON
+              </button>
+            </div>
+          </div>
+
+        </aside>
+
+        <!-- ==================== RIGHT: PLEOS APPLICATION WINDOW (EV MOMENT 4 Core Screens) ==================== -->
+        <section id="pleosAppWindowPane" class="pleos-app-window lg:col-span-8 p-5 sm:p-7 flex flex-col justify-between">
+
+          <!-- Top App Navigation Bar (Clean Pill Tabs 01 ~ 04) -->
+          <div class="space-y-4 mb-5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-sky-500 flex items-center justify-center text-slate-950 font-black text-xs shadow">
+                  EV
+                </div>
+                <div>
+                  <h2 class="text-base font-extrabold text-white leading-none">EV MOMENT</h2>
+                  <p class="text-[11px] text-slate-400 mt-1">충전하는 시간까지, 내 시간으로 · 양재 본사 주변 시연 데이터</p>
+                </div>
+              </div>
+
+              <button id="btnExpandAppWindow" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-200 hover:text-white border border-slate-700 transition">
+                ⤢ 유틸리티 풀스크린 전환
+              </button>
+            </div>
+
+            <!-- 4 Step Pill Tabs -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" role="tablist" aria-label="EV MOMENT 4대 핵심 화면">
+              <button id="tabScreen1" type="button" data-screen="1" class="screen-tab flex items-center gap-2.5 px-3.5 py-3 rounded-2xl border text-left transition pleos-card-active">
+                <span class="w-7 h-7 rounded-lg bg-sky-400 text-slate-950 font-extrabold text-xs flex items-center justify-center shrink-0">01</span>
+                <div class="overflow-hidden">
+                  <div class="text-xs font-extrabold text-white truncate">충전 현황</div>
+                  <div class="text-[11px] text-slate-400 truncate">상태·개인화 설정</div>
+                </div>
+              </button>
+
+              <button id="tabScreen2" type="button" data-screen="2" class="screen-tab flex items-center gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-800 bg-slate-900/60 text-left hover:border-slate-700 transition">
+                <span class="w-7 h-7 rounded-lg bg-slate-800 text-slate-300 font-extrabold text-xs flex items-center justify-center shrink-0">02</span>
+                <div class="overflow-hidden">
+                  <div class="text-xs font-extrabold text-white truncate">주변 장소</div>
+                  <div class="text-[11px] text-slate-400 truncate">시간 맞춤 활동 탐색</div>
+                </div>
+              </button>
+
+              <button id="tabScreen3" type="button" data-screen="3" class="screen-tab flex items-center gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-800 bg-slate-900/60 text-left hover:border-slate-700 transition">
+                <span class="w-7 h-7 rounded-lg bg-slate-800 text-slate-300 font-extrabold text-xs flex items-center justify-center shrink-0">03</span>
+                <div class="overflow-hidden">
+                  <div class="text-xs font-extrabold text-white truncate">활동 일정</div>
+                  <div class="text-[11px] text-slate-400 truncate">이동·체류·복귀 계산</div>
+                </div>
+              </button>
+
+              <button id="tabScreen4" type="button" data-screen="4" class="screen-tab flex items-center gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-800 bg-slate-900/60 text-left hover:border-slate-700 transition relative">
+                <span class="w-7 h-7 rounded-lg bg-slate-800 text-slate-300 font-extrabold text-xs flex items-center justify-center shrink-0">04</span>
+                <div class="overflow-hidden">
+                  <div class="text-xs font-extrabold text-white truncate">일정 재조정</div>
+                  <div class="text-[11px] text-slate-400 truncate">충전 변동 시 갱신</div>
+                </div>
+                <span id="tab4AlertDot" class="hidden absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ==================== SCREEN 01: 충전 현황 & 개인화 설정 ==================== -->
+          <div id="screenPanel1" class="screen-panel flex-1 flex flex-col justify-between space-y-4">
+            <div class="space-y-4">
+              <!-- Winner Benchmark Persona & Vehicle Linkage Banner -->
+              <div class="pleos-card px-4 py-3 border-l-4 border-l-sky-400 flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <span class="text-[11px] font-bold text-sky-400 uppercase tracking-wider">USER STORY & VEHICLE CONTEXT (기출 수상작 벤치마킹 구조)</span>
+                  <p id="s1PersonaStoryText" class="text-xs sm:text-sm font-bold text-white mt-0.5">"양재 본사 충전소에서 40분 급속 충전 중, 늦지 않게 스페셜티 커피 한 잔 마시고 돌아오고 싶은 나 홀로 운전자"</p>
+                </div>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-[11px] font-semibold text-slate-300">
+                  활용 맥락: 기어 P단 · 충전 잔여시간 · 위치 · 공조 시연
+                </span>
+              </div>
+
+              <!-- Top 3 Summary Cards -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                <div class="pleos-card p-4">
+                  <span class="text-xs text-slate-400 font-medium">데이터 모드</span>
+                  <div id="s1DataSourceTitle" class="text-base font-extrabold text-sky-400 mt-1">차량 데이터 시연</div>
+                  <p id="s1DataSourceDesc" class="text-xs text-slate-400 mt-1">SoC·충전 시간 시연값 (수동·시뮬레이션 가능)</p>
+                </div>
+
+                <div class="pleos-card p-4">
+                  <span class="text-xs text-slate-400 font-medium">안전 복귀 여유 시간 (Buffer)</span>
+                  <div class="flex items-center gap-1.5 mt-2">
+                    <button type="button" data-buffer="5" class="buffer-btn flex-1 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700">5분 전 복귀</button>
+                    <button type="button" data-buffer="8" class="buffer-btn flex-1 py-1.5 rounded-xl text-xs font-bold bg-sky-500 text-slate-950">8분 전 복귀</button>
+                    <button type="button" data-buffer="12" class="buffer-btn flex-1 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700">12분 전 복귀</button>
+                  </div>
+                </div>
+
+                <div class="pleos-card p-4">
+                  <span class="text-xs text-slate-400 font-medium">양재 본사 주변 실행 가능 장소</span>
+                  <div class="flex items-baseline gap-1.5 mt-1">
+                    <span id="s1FeasibleCount" class="text-3xl font-black text-emerald-400 font-mono">6</span>
+                    <span class="text-sm text-white font-bold">곳 추천 가능</span>
+                    <span class="text-xs text-slate-400">/ 전체 8곳</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Companion Selector -->
+              <div class="space-y-2.5">
+                <label class="text-sm font-extrabold text-white block">누구와 함께 이동 중이신가요? <span class="text-xs font-normal text-slate-400 ml-1">동승 상황에 맞춰 도보 시간과 추천 장소가 자동 조정됩니다</span></label>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="companionSelectorGroup">
+                  <button type="button" data-companion="solo" class="companion-btn pleos-card pleos-card-active p-4 text-left">
+                    <div class="text-2xl mb-1.5">🧑</div>
+                    <div class="text-sm font-extrabold text-white">나 혼자</div>
+                    <div class="text-xs text-slate-400 mt-0.5">표준 걸음 (분당 80m)</div>
+                  </button>
+                  <button type="button" data-companion="kids" class="companion-btn pleos-card p-4 text-left">
+                    <div class="text-2xl mb-1.5">👨‍👩‍👧</div>
+                    <div class="text-sm font-extrabold text-white">아이와 함께</div>
+                    <div class="text-xs text-slate-400 mt-0.5">여유 걸음 (도보 ×1.3배)</div>
+                  </button>
+                  <button type="button" data-companion="pet" class="companion-btn pleos-card p-4 text-left">
+                    <div class="text-2xl mb-1.5">🐕</div>
+                    <div class="text-sm font-extrabold text-white">반려동물 동반</div>
+                    <div class="text-xs text-slate-400 mt-0.5">산책·야외 테라스 우선</div>
+                  </button>
+                  <button type="button" data-companion="work" class="companion-btn pleos-card p-4 text-left">
+                    <div class="text-2xl mb-1.5">💻</div>
+                    <div class="text-sm font-extrabold text-white">비즈니스·업무</div>
+                    <div class="text-xs text-slate-400 mt-0.5">콘센트·조용한 카페 우선</div>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Category Filter Pills -->
+              <div class="space-y-2.5">
+                <label class="text-sm font-extrabold text-white block">어떤 활동을 원하시나요?</label>
+                <div class="flex flex-wrap gap-2.5" id="categorySelectorGroup">
+                  <button type="button" data-category="ALL" class="category-btn px-4 py-2.5 rounded-xl text-xs font-bold bg-sky-500 text-slate-950 transition">✨ 전체 맞춤 추천</button>
+                  <button type="button" data-category="CAFE" class="category-btn px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition">☕ 카페·디저트</button>
+                  <button type="button" data-category="FOOD" class="category-btn px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition">🍜 빠른 식사·스낵</button>
+                  <button type="button" data-category="SHOP" class="category-btn px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition">🛍️ 쇼핑·편의시설</button>
+                  <button type="button" data-category="WALK" class="category-btn px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition">🌳 산책·힐링</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800 flex items-center justify-between gap-4">
+              <div class="text-xs text-slate-400">
+                현재 설정: <strong id="s1SummaryText" class="text-white">가용 40분 · 나 혼자 · 안전 여유 8분</strong>
+              </div>
+              <button id="btnGoScreen2" type="button" class="px-6 py-3 rounded-2xl font-extrabold text-sm bg-sky-500 hover:bg-sky-400 text-slate-950 shadow-lg transition">
+                <span>시간 맞춤 주변 장소 탐색하기</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ==================== SCREEN 02: 주변 장소 (현대자동차 양재 본사 주변 탐색) ==================== -->
+          <div id="screenPanel2" class="screen-panel hidden flex-1 flex flex-col justify-between space-y-4">
+            <div class="space-y-3.5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h3 class="text-lg sm:text-xl font-extrabold text-white">
+                    현대차 양재 본사 주변 <span id="s2HeaderMinutes" class="text-sky-400 font-mono">40</span>분 내 다녀올 수 있는 곳
+                  </h3>
+                  <p class="text-xs text-slate-400">왕복 도보 + 매장 체류 + 복귀 여유 시간을 모두 만족하는 실제 주변 장소입니다 (거리·시간·혼잡도는 시연 데이터)</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <button id="btnFetchLivePoi" type="button" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition">
+                    <span>🌐 실시간 양재 본사 주변 장소 API 호출</span>
+                  </button>
+                  <label class="inline-flex items-center gap-2 text-xs font-semibold text-slate-300 cursor-pointer bg-slate-900 px-3.5 py-2 rounded-xl border border-slate-800">
+                    <input id="chkHideInfeasible" type="checkbox" class="rounded accent-sky-400" />
+                    <span>시간 초과 장소 숨기기</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+                <!-- Left: Rectangular Hyundai Native Navigation Map Theme (5 cols) -->
+                <div class="xl:col-span-5 pleos-card p-3.5 flex flex-col justify-between">
+                  <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                      <span class="text-xs font-extrabold text-white">양재 본사 주변 내비게이션 맵</span>
+                    </div>
+                    <span class="text-[11px] text-slate-400 font-mono font-semibold">시연 좌표 반경 500m</span>
+                  </div>
+
+                  <!-- Rectangular Automotive Navigation Map Container -->
+                  <div class="relative w-full h-[265px] rounded-xl overflow-hidden border border-slate-700/70 shadow-inner">
+                    <svg id="radarSvg" viewBox="0 0 340 250" preserveAspectRatio="none" class="w-full h-full">
+                      <!-- Base Map Land -->
+                      <rect x="0" y="0" width="340" height="250" fill="var(--map-land)" />
+
+                      <!-- Urban Blocks -->
+                      <rect x="12" y="14" width="95" height="62" rx="4" fill="var(--map-block)" />
+                      <rect x="125" y="14" width="110" height="62" rx="4" fill="var(--map-block)" />
+                      <rect x="250" y="14" width="78" height="75" rx="4" fill="var(--map-block)" />
+                      <rect x="125" y="94" width="95" height="68" rx="5" fill="var(--map-block)" stroke="#475569" stroke-width="0.8" stroke-dasharray="2 2"/>
+                      <rect x="234" y="102" width="94" height="62" rx="4" fill="var(--map-block)" />
+                      <rect x="12" y="176" width="100" height="62" rx="4" fill="var(--map-block)" />
+                      <rect x="128" y="176" width="198" height="62" rx="4" fill="var(--map-block)" />
+
+                      <!-- Maeheon Citizen's Forest Park Zone (Top-Left / Mid-Left) -->
+                      <path d="M10 86 L108 86 L108 160 L10 160 Z" rx="6" fill="var(--map-park)" />
+                      <text x="58" y="118" text-anchor="middle" fill="#5EAB8E" font-size="8.5" font-weight="700" opacity="0.85">매헌시민의숲</text>
+
+                      <!-- Yangjaecheon Stream (Top-Left Curve) -->
+                      <path d="M0 44 Q65 48, 116 0" fill="none" stroke="var(--map-water)" stroke-width="12" />
+                      <text x="42" y="34" fill="#6EA1C8" font-size="7.5" font-weight="700" opacity="0.8">양재천</text>
+
+                      <!-- Minor Roads (Maeheon-ro, Cheonggyesan-ro) -->
+                      <line x1="116" y1="0" x2="116" y2="250" stroke="var(--map-road-major)" stroke-width="9" />
+                      <line x1="227" y1="0" x2="227" y2="250" stroke="var(--map-road-minor)" stroke-width="6" />
+                      <line x1="0" y1="82" x2="340" y2="82" stroke="var(--map-road-minor)" stroke-width="6" />
+
+                      <!-- Major Arterial Road: Heolleung-ro (헌릉로) & Gyeongbu Expy (경부고속도로) -->
+                      <line x1="0" y1="168" x2="340" y2="168" stroke="var(--map-road-major)" stroke-width="11" />
+                      <line x1="0" y1="168" x2="340" y2="168" stroke="#64748B" stroke-width="1" stroke-dasharray="6 4" opacity="0.5" />
+                      <path d="M210 0 L195 250" stroke="var(--map-road-highway)" stroke-width="10" opacity="0.55" />
+
+                      <!-- Road Labels -->
+                      <text x="113" y="218" text-anchor="end" fill="var(--map-text)" font-size="7.5" font-weight="700">매헌로</text>
+                      <text x="295" y="162" text-anchor="end" fill="var(--map-text)" font-size="8" font-weight="700">헌릉로</text>
+
+                      <!-- Subtle Rectangular/Rounded Distance Guide Zone (Not a radar!) -->
+                      <rect x="64" y="54" width="212" height="148" rx="18" fill="none" stroke="#5B8FB9" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.55" />
+
+                      <!-- Active Walking Route Line Layer + Dynamic POI Pins Group -->
+                      <g id="radarPinsGroup"></g>
+
+                      <!-- Center Anchor: Hyundai Motor HQ Charging Station -->
+                      <g transform="translate(172, 132)">
+                        <rect x="-34" y="10" width="68" height="15" rx="4" fill="#0F172A" fill-opacity="0.9" stroke="#5B8FB9" stroke-width="1"/>
+                        <text x="0" y="20" text-anchor="middle" fill="#E2E8F0" font-size="8" font-weight="800">현대차 양재본사</text>
+                        <circle cx="0" cy="0" r="9" fill="#5B8FB9" fill-opacity="0.28"/>
+                        <circle cx="0" cy="0" r="5" fill="#5B8FB9" stroke="#FFFFFF" stroke-width="1.8"/>
+                      </g>
+                    </svg>
+
+                    <!-- Floating Pleos Native Navigation HUD Overlays -->
+                    <!-- Top-Left: Floating TBT / Walk Route Summary Card -->
+                    <div class="absolute top-2.5 left-2.5 bg-slate-950/90 border border-slate-700/80 rounded-xl px-2.5 py-1.5 shadow-md backdrop-blur-sm">
+                      <div class="flex items-center gap-1.5">
+                        <span class="text-xs">🚶</span>
+                        <span id="mapSelectedRouteTitle" class="text-[11px] font-extrabold text-white">미니말레 양재본점</span>
+                      </div>
+                      <div id="mapSelectedRouteSub" class="text-[10px] text-slate-300 font-mono mt-0.5">편도 280m · 도보 4분 (왕복 8분)</div>
+                    </div>
+
+                    <!-- Top-Right: North-Up Compass & Scale -->
+                    <div class="absolute top-2.5 right-2.5 flex flex-col items-end gap-1">
+                      <div class="w-7 h-7 rounded-lg bg-slate-950/85 border border-slate-700/80 flex flex-col items-center justify-center text-[9px] font-bold text-slate-200 leading-none">
+                        <span class="text-rose-400">▲</span>
+                        <span>N</span>
+                      </div>
+                    </div>
+
+                    <!-- Bottom-Right: Scale Bar -->
+                    <div class="absolute bottom-2 right-2.5 bg-slate-950/80 border border-slate-700/70 rounded px-1.5 py-0.5 text-[9px] font-mono text-slate-300">
+                      100m ━━━
+                    </div>
+                  </div>
+
+                  <!-- Map Legend Footer -->
+                  <div class="flex items-center justify-between text-[11px] text-slate-400 pt-2.5 mt-1 border-t border-slate-800">
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#4D967B]"></span>여유 추천</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#C98F3E]"></span>빠듯함</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#B85D5D]"></span>시간초과</span>
+                  </div>
+                </div>
+
+                <!-- Right: Clean Place Cards (7 cols) -->
+                <div id="placesCardContainer" class="xl:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[340px] overflow-y-auto pr-1">
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+              <button id="btnBackScreen1" type="button" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white transition">
+                ← 01. 조건 다시 설정
+              </button>
+              <button id="btnGoScreen3" type="button" class="px-6 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-sky-500 hover:bg-sky-400 text-slate-950 transition">
+                <span>선택한 장소로 활동 일정 계산하기 (03)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ==================== SCREEN 03: 활동 일정 (이동·체류·복귀 시각 계산) ==================== -->
+          <div id="screenPanel3" class="screen-panel hidden flex-1 flex flex-col justify-between space-y-4">
+            <div class="space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h3 id="s3PlaceTitle" class="text-lg sm:text-xl font-extrabold text-white">미니말레 커피로스터 양재본점 — 활동 일정</h3>
+                  <p class="text-xs text-slate-400 mt-0.5">현대차 본사 충전소 출발부터 매장 체류, 복귀까지 계산된 타임라인입니다</p>
+                </div>
+                <span id="s3FeasibilityBadge" class="px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                  ✓ 충전 완료 12분 전 안전 복귀
+                </span>
+              </div>
+
+              <!-- 4-Step Horizontal Timeline Cards -->
+              <div class="grid grid-cols-1 sm:grid-cols-4 gap-3" id="s3TimelineSteps"></div>
+
+              <!-- Mode Switch & Mobile Preview Box -->
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5">
+                <div class="md:col-span-7 pleos-card p-4 space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-extrabold text-white">체류 방식 선택</span>
+                    <span id="s3ModeLabel" class="text-xs text-sky-400 font-bold">매장 여유 체류</span>
+                  </div>
+
+                  <div class="flex gap-2.5">
+                    <button id="btnModeStayFull" type="button" class="flex-1 py-2.5 px-3 rounded-xl text-xs font-bold bg-sky-500 text-slate-950 transition">
+                      ☕ 매장 체류 (기본)
+                    </button>
+                    <button id="btnModeTakeout" type="button" class="flex-1 py-2.5 px-3 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition">
+                      ⚡ 빠른 픽업/테이크아웃 (시간 단축)
+                    </button>
+                  </div>
+
+                  <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-300">
+                    <span>장소 특징:</span>
+                    <strong id="s3ActivityTip" class="text-white">직접 로스팅하는 스페셜티 커피 & 에그타르트 · 테이크아웃 신속</strong>
+                  </div>
+                </div>
+
+                <div class="md:col-span-5 pleos-card p-4 flex flex-col justify-between gap-2.5">
+                  <div class="flex items-start justify-between gap-2">
+                    <div class="space-y-1">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/20 text-sky-300">SDK 실제 연동 전 · 화면 시연</span>
+                      <h4 class="text-sm font-extrabold text-white">차량 내비·TTS 브리핑 & 모바일 미리보기</h4>
+                      <p class="text-[11px] text-slate-400">NaviHelper 경유지 연동 예정 · 안내 문구 시연 및 모바일 화면 미리보기</p>
+                    </div>
+                    <div class="w-11 h-11 rounded-xl bg-slate-900 border border-slate-700 shrink-0 flex flex-col items-center justify-center text-center">
+                      <span class="text-base">🧭</span>
+                    </div>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5 pt-1">
+                    <button id="btnNaviTtsDemo" type="button" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition">
+                      🔊 경유지·음성 안내 문구 시연 (미연동)
+                    </button>
+                    <button id="btnOpenQrModal" type="button" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-500/40 hover:bg-sky-500/30 transition">
+                      📱 모바일 화면 미리보기 (QR·푸시 후속구현)
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+              <button id="btnBackScreen2" type="button" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white transition">
+                ← 02. 다른 장소 선택
+              </button>
+              <button id="btnGoScreen4" type="button" class="px-6 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-amber-400 hover:bg-amber-300 text-slate-950 transition">
+                <span>충전 시간 변동 및 일정 재조정 시연 (04)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ==================== SCREEN 04: 일정 재조정 (충전 시간 변경 시 추천 갱신) ==================== -->
+          <div id="screenPanel4" class="screen-panel hidden flex-1 flex flex-col justify-between space-y-4">
+            <div class="space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h3 class="text-lg sm:text-xl font-extrabold text-white">충전 시간 변동 시뮬레이션 및 일정 재조정</h3>
+                  <p class="text-xs text-slate-400 mt-0.5">충전 잔여 시간이 단축되거나 지연될 때 실행 가능한 대안을 즉시 다시 계산합니다</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button id="btnS4TriggerShorten" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30 transition">
+                    ⚡ 충전속도 상승 (-12분 단축)
+                  </button>
+                  <button id="btnS4TriggerExtend" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 transition">
+                    ⏳ 옆 차량 분배 (+15분 지연)
+                  </button>
+                </div>
+              </div>
+
+              <!-- Status Alert Card -->
+              <div id="s4AlertBanner" class="pleos-card p-4 border-l-4 border-l-sky-400"></div>
+
+              <!-- 3 Re-sync Options -->
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <h4 class="text-xs font-extrabold text-slate-300">변경된 충전 시간에 맞춘 추천 대안 (원터치 적용)</h4>
+                  <span id="s4SubStatus" class="text-xs text-sky-400 font-semibold">카드를 선택하면 03번 활동 일정이 즉시 갱신됩니다</span>
+                </div>
+                <div id="s4AlternativesGrid" class="grid grid-cols-1 md:grid-cols-3 gap-3.5"></div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+              <button id="btnBackScreen3" type="button" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white transition">
+                ← 03. 활동 일정으로 돌아가기
+              </button>
+              <button id="btnApplyBestAlternative" type="button" class="px-6 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-sky-500 hover:bg-sky-400 text-slate-950 transition">
+                ✓ 최적 대안으로 일정 즉시 갱신
+              </button>
+            </div>
+          </div>
+
+        </section>
+      </div>
+
+      <!-- 3. PLEOS GLOBAL NAVIGATION BAR (GNB) BOTTOM DOCK -->
+      <div class="pleos-gnb-dock w-full bg-[#090C12] border-t border-slate-800/90 px-5 py-2.5 flex flex-wrap items-center justify-between gap-2 select-none">
+        <!-- Left: Driver Temp Demo Control -->
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-xl px-3 py-1">
+            <button id="btnDriverTempDown" type="button" class="text-slate-400 hover:text-white font-bold px-1">−</button>
+            <span id="gnbDriverTemp" class="text-sm font-extrabold font-mono text-white">22.0°</span>
+            <button id="btnDriverTempUp" type="button" class="text-slate-400 hover:text-white font-bold px-1">+</button>
+          </div>
+          <span class="hidden sm:inline-flex items-center px-2.5 py-1 rounded-lg bg-slate-900 text-sky-400 text-[11px] font-bold border border-slate-800">
+            ❄️ AUTO 공조 (시연 토글)
+          </span>
+        </div>
+
+        <!-- Center: App Dock Icons -->
+        <div class="flex items-center gap-2">
+          <button id="btnGnbAppLibrary" type="button" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-300 hover:text-white transition" title="App Library">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+          </button>
+          <button id="btnGnbNavi" type="button" class="px-3.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300 hover:text-white flex items-center gap-1.5 transition">
+            <span>🧭</span>
+            <span class="hidden md:inline">내비게이션</span>
+          </button>
+          <button id="btnGnbEvMoment" type="button" class="px-3.5 py-1.5 rounded-xl bg-sky-500/20 border-2 border-sky-400 text-xs font-extrabold text-white flex items-center gap-1.5">
+            <span class="w-4 h-4 rounded bg-sky-400 text-slate-950 flex items-center justify-center text-[10px] font-black">EV</span>
+            <span>EV MOMENT</span>
+          </button>
+          <button id="btnGnbAppMarket" type="button" class="px-3.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300 hover:text-white flex items-center gap-1.5 transition">
+            <span>🛍️</span>
+            <span class="hidden md:inline">App Market</span>
+          </button>
+        </div>
+
+        <!-- Right: Toast & Passenger Temp -->
+        <div class="flex items-center gap-3">
+          <span id="toastStatusText" class="text-xs text-emerald-400 font-bold truncate max-w-[260px] sm:max-w-none">
+            현대자동차 양재 본사 충전소 기준 시연 데이터 로드됨
+          </span>
+          <span class="hidden md:inline-block font-mono text-xs font-bold text-slate-400 bg-slate-900 px-2.5 py-1 rounded-xl border border-slate-800">
+            동승석 22.5° (시연)
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modal 1: Official Contest Proposal & Technical Scope -->
+  <div id="proposalModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-4xl w-full max-h-[88vh] flex flex-col shadow-2xl overflow-hidden text-slate-100">
+      <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+        <div>
+          <span class="text-xs font-bold text-sky-400">현대자동차그룹 차량용 앱 개발 공모전 제출용</span>
+          <h3 class="text-lg font-extrabold text-white">EV MOMENT — 기획서 초안 및 기술·데모 범위 안내</h3>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btnCopyProposal" type="button" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-500 text-slate-950 hover:bg-sky-400 transition">
+            📋 기획서 전문 복사
+          </button>
+          <button id="btnCloseProposalModal" type="button" class="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <div id="proposalTextContent" class="p-5 overflow-y-auto space-y-4 text-xs sm:text-sm text-slate-200 leading-relaxed">
+        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800">
+          <div class="text-base font-extrabold text-sky-400">EV MOMENT — 충전하는 시간까지, 내 시간으로.</div>
+          <p class="text-xs text-slate-400 mt-1">시연 기준 거점: 현대자동차 양재 본사 충전소 (서울특별시 서초구 헌릉로 12) 및 주변 실제 상권 기반</p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-indigo-950/40 border border-indigo-500/30 space-y-1.5">
+          <h4 class="font-extrabold text-indigo-300">🏆 기존 플레오스 공모전·해커톤 수상작(테일싱크·창밖동화·차마고치 등) 벤치마킹 반영 포인트</h4>
+          <ul class="list-disc list-inside text-xs text-slate-300 space-y-1">
+            <li><strong>시간 동기화(Time-Sync) 알고리즘:</strong> 사내 해커톤 대상작 <em>'테일싱크(TaleSync)'</em>가 목적지 도착 잔여 시간에 맞춰 스토리를 완결 지은 것처럼, <strong>EV MOMENT</strong>는 <strong>충전 완료 잔여 시간에 맞춰 외부 활동(이동+체류+복귀 여유)이 정확히 끝나도록 설계</strong>해 스마트폰 맛집 앱과 확실히 차별화했습니다.</li>
+            <li><strong>명확한 타깃 유저스토리(Persona):</strong> 고객 공모전 대상작 <em>'창밖동화'</em>의 핵심 호평 요인이었던 구체적 타깃팅을 반영해, 동승 상황(나 혼자 / 아이 동반 / 반려동물 / 비즈니스)별 보행 속도 가중치와 추천 코스가 즉시 전환되도록 구성했습니다.</li>
+            <li><strong>유기적인 차량 맥락 결합:</strong> 심사위원 핵심 기준인 <em>"왜 스마트폰이 아니라 차량용 앱이어야 하는가?"</em>에 답하기 위해 기어 상태(P단 충전 진입), 잔여 충전 시간, 위치 반경, 복귀 전 실내 공조 프리컨디셔닝 시나리오를 하나의 흐름으로 묶었습니다.</li>
+          </ul>
+        </div>
+
+        <div class="p-4 rounded-xl bg-sky-950/30 border border-sky-500/30 space-y-1.5">
+          <h4 class="font-extrabold text-sky-300">★ 화면 설계 방향 및 브라우저 목업 안내</h4>
+          <ul class="list-disc list-inside text-xs text-slate-300 space-y-1">
+            <li><strong>시스템 레이아웃 참조:</strong> Pleos Connect 공개 문서의 화면 구성 요소(상단 Status Bar, 좌측 Driving View, 우측 Application Window, 하단 GNB) 배치를 참조해 한눈에 들어오는 카드형 레이아웃으로 설계했습니다.</li>
+            <li><strong>주/야간 테마 지원:</strong> 주간(Light)/야간(Dark) 테마 전환을 지원하며, 실제 앱 출품 시 Pleos Connect Emulator 상에서 최종 시인성을 검증합니다.</li>
+            <li><strong>브라우저 시연 목업 구분:</strong> 본 HTML 파일은 기획서 이해를 돕기 위한 웹 브라우저 목업입니다. 본선 제출 및 실제 Pleos 앱 구동 검증은 Android Studio 프로젝트(APK)와 Pleos Connect Emulator 환경에서 별도로 진행합니다.</li>
+          </ul>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/70">
+            <h4 class="font-bold text-white mb-1.5">1. 개발 배경</h4>
+            <p class="text-xs text-slate-300">전기차 이용자는 충전 과정에서 일정한 대기 시간을 경험합니다. 기존 충전 관련 서비스는 충전소 탐색, 충전 상태 조회 및 결제 등에 집중되어 있습니다. EV MOMENT는 충전 중 발생하는 시간을 단순한 대기 시간이 아닌 활용 가능한 생활 시간으로 전환하고자 기획한 차량용 애플리케이션입니다.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/70">
+            <h4 class="font-bold text-white mb-1.5">2. 서비스 개요</h4>
+            <p class="text-xs text-slate-300">EV MOMENT는 차량의 충전 정보와 위치 데이터를 기반으로 주변 생활시설을 탐색하고, 이용자가 충전 완료 전에 차량으로 돌아올 수 있도록 맞춤형 활동을 추천하는 서비스입니다.</p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/70 space-y-2">
+          <h4 class="font-bold text-white">3. 주요 기능 및 우선순위</h4>
+          <ul class="list-disc list-inside text-xs text-slate-300 space-y-1">
+            <li><strong>[우선순위 1] 충전 상태 확인:</strong> 배터리 잔량(SoC)·충전 상태 및 예상 잔여 시간 확인 (수동 입력·시뮬레이션 지원)</li>
+            <li><strong>[우선순위 2] 주변 활동 추천:</strong> 현대차 본사 충전소 주변 실제 카페·식당·공원·마트 탐색</li>
+            <li><strong>[우선순위 3 · 핵심 차별화] 시간 맞춤 추천:</strong> 왕복 도보·체류·복귀 여유시간(Buffer) 통합 계산</li>
+            <li><strong>[우선순위 4 · 핵심 차별화] 충전 일정 동기화:</strong> 충전 잔여 시간 변동 시 추천 및 체류 방식 실시간 재계산</li>
+            <li><strong>[우선순위 5] 개인화:</strong> 선호 활동과 동승 상황(나 혼자, 아이 동반, 반려동물, 비즈니스) 반영</li>
+          </ul>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/70 space-y-2">
+          <h4 class="font-bold text-white">4. 기술 구현 계획 (42dot OT 기준 Pleos SDK & Virtual Console 검증 구조)</h4>
+          <p class="text-xs text-slate-300">
+            • <strong>개발 환경 및 권한 선언 (연동 계획):</strong> Android WebView 기반 프로젝트 소스를 제공하지만 Pleos Emulator 빌드·SDK 실호출은 미검증입니다. AndroidManifest의 선언만으로 Vehicle/NaviHelper/FusedLocation SDK가 실제 연결되지는 않으며, 공식 문서 기준 의존성·권한·호출 구현이 추가로 필요합니다.<br>
+            • <strong>Virtual Console 연동 계획:</strong> 앱에는 JavaScript로 시연용 SoC·충전 시간 값을 반영하는 브리지 연결 지점이 있습니다. Virtual Console에서 실제 이벤트를 받아오는 기능은 아직 없습니다. 현재는 수동 시간 조정 및 시뮬레이션으로 재계산을 확인합니다.<br>
+            • <strong>외부 API 및 안내 기능:</strong> Overpass 장소 조회 요청 코드와 브라우저 알림·Android 기본 TTS 연결 지점이 있습니다. 실제 NaviHelper 경유지 등록 및 Pleos 전용 TTS SDK 연동은 아직 구현하지 않았습니다.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 space-y-2">
+          <h4 class="font-extrabold text-emerald-300">5. 공식 OT 발표 4대 필수 심사 기준 부합성 (차량 특화성 · 창의성 · 기술 활용성 · 사업성)</h4>
+          <ul class="list-disc list-inside text-xs text-slate-300 space-y-1">
+            <li><strong>① 차량 특화성 (모바일과 다른 차량 고유 가치):</strong> 스마트폰 맛집 앱과 달리 <em>'차량 P단 정차·충전 진입 맥락 + 배터리 가용 시간 + 동승자 특성 + 복귀 전 공조 예약'</em>을 결합해 차량 환경에서만 성립하는 시간 예산(Time-Budget) 경험을 제공합니다.</li>
+            <li><strong>② 창의성 (명확한 문제 정의와 해법):</strong> 전기차 차주의 가장 큰 페인 포인트인 <em>"충전 중 어디까지 다녀와야 제시간에 복귀할 수 있는가?"</em>를 왕복 도보·체류·안전 버퍼 통합 수식과 충전 시간 변동 시 원터치 재조정으로 명확히 해결했습니다.</li>
+            <li><strong>③ 기술 활용성 (핵심 기능 중심의 SDK 선택과 집중):</strong> 시간 예산 엔진은 웹 프로토타입으로 구현했습니다. 실제 차량 연동을 위해 <code>Vehicle SDK</code>(배터리·기어), <code>FusedLocation</code>(차량 위치), <code>NaviHelper</code>(경유지), 음성 안내 SDK 연동을 후속 개발 범위로 설계했습니다.</li>
+            <li><strong>④ 사업성 (타깃 고객 및 지속 수익 모델):</strong> 명확한 전기차 충전 대기 고객층을 타깃으로 하며, 향후 충전소(E-pit 등) 주변 로컬 상권의 '충전 시간 맞춤 픽업·타임 쿠폰·웨이팅 연동' 제휴 플랫폼으로 확장 가능성이 높습니다.</li>
+          </ul>
+        </div>
+
+        <div class="p-4 rounded-xl bg-amber-950/30 border border-amber-500/30 space-y-1.5">
+          <h4 class="font-extrabold text-amber-300">📌 11월 15일 1차 제출 & 이메일 접수 체크리스트 (OT 운영사무국 공식 기준)</h4>
+          <ul class="list-disc list-inside text-xs text-slate-300 space-y-1">
+            <li><strong>이메일 제목 규칙:</strong> <code>[차량용 앱 개발 공모전] EV MOMENT_팀명(또는 엄하준)</code> / 수정 재제출 시 맨 앞에 <code>[수정 제출]</code> 기재 (마감 전 마지막 메일이 최종본으로 접수됨)</li>
+            <li><strong>필수 제출물 & 참조(CC):</strong> 공식 양식 기획서 + 참가자 전원 서명 동의서 첨부 필수, 이메일 발송 시 <strong>팀원 전원 이메일 참조(CC) 필수</strong></li>
+            <li><strong>선택 제출물 (1차 심사 가산점 부여):</strong> 프로토타입 시연 영상(본 화면 녹화본) 및 GitHub 저장소 링크 제출 시 가산점 부여 (README에 앱 이름, 한 줄 소개, 실행 방법, 테스트 환경 기재)</li>
+            <li><strong>숏폼 챌린지 (선택·별도 상금 50만 원 & 2027년 2월 행사 초청권):</strong> 30~60초 세로 영상을 유튜브 쇼츠/인스타 릴스에 필수 해시태그 <code>#HMG차량용앱개발공모전</code> 포함 총 2~3개 이상 태그와 함께 업로드 후 접수 양식에 링크 기재</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Real QR Generator & Live Mobile Companion Timer + Push Notification -->
+  <div id="qrModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-5 shadow-2xl space-y-4 text-slate-100">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div>
+          <span class="text-xs font-bold text-sky-400">MOBILE COMPANION & LIVE TIMER</span>
+          <h3 class="text-base font-extrabold text-white">스마트폰 복귀 타이머 QR 연동 및 실시간 알림 테스트</h3>
+        </div>
+        <button id="btnCloseQrModal" type="button" class="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white">✕</button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-12 gap-3.5 items-center bg-slate-950 rounded-xl p-4 border border-slate-800">
+        <!-- Real Scannable QR Code Canvas -->
+        <div class="sm:col-span-5 flex flex-col items-center justify-center space-y-1.5">
+          <div class="bg-white p-2.5 rounded-xl border border-slate-300 shadow">
+            <canvas id="realQrCanvas" width="136" height="136" class="w-[136px] h-[136px]"></canvas>
+          </div>
+          <span class="text-[10px] text-slate-400 text-center leading-tight">스마트폰 카메라 스캔 시<br>모바일 타이머 URL 연결</span>
+        </div>
+
+        <!-- Live Mobile Timer & Push Controls -->
+        <div class="sm:col-span-7 space-y-2.5 text-left">
+          <div class="text-[11px] text-slate-400">하차 후 모바일 복귀 카운트다운</div>
+          <div id="qrModalPlaceName" class="text-base font-extrabold text-sky-400 truncate">미니말레 커피로스터 양재본점</div>
+          <div class="flex items-baseline justify-between bg-slate-900 px-3 py-2 rounded-lg border border-slate-800">
+            <span class="text-xs text-slate-300">매장 출발 권고: <strong id="qrModalDepartBackTime" class="text-emerald-400 font-mono">16:08</strong></span>
+            <span id="qrLiveCountdown" class="text-sm font-black font-mono text-amber-300">24:00</span>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            <button id="btnStartLiveCountdown" type="button" class="flex-1 py-1.5 px-2.5 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition">
+              ⏱️ 실시간 타이머 시작
+            </button>
+            <button id="btnTestPushNotify" type="button" class="flex-1 py-1.5 px-2.5 rounded-lg text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-500/40 hover:bg-sky-500/30 transition">
+              🔔 출발 알림 즉시 발송
+            </button>
+          </div>
+
+          <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800 text-[11px] text-slate-400 leading-relaxed">
+            • <strong>[출발 알림 즉시 발송]</strong> 클릭 시 Web Notification API 알림 및 음향(Web Audio)이 즉시 울립니다.<br>
+            • 외부 배포 URL(GitHub Pages 등)에서 열면 좌측 QR 스캔 시 스마트폰에서 모바일 전용 타이머가 즉시 실행됩니다.
+          </div>
+        </div>
+      </div>
+
+      <button id="btnConfirmQrModal" type="button" class="w-full py-2.5 rounded-xl text-xs font-bold bg-sky-500 text-slate-950 hover:bg-sky-400 transition">
+        확인
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // ==================== EV MOMENT STATE & HYUNDAI HQ (YANGJAE) DATA ====================
+    const BASE_TIME_MINUTES = 15 * 60 + 40; // 15:40
+
+    const COMPANION_PROFILES = {
+      solo: {
+        label: '🧑 나 혼자',
+        walkMultiplier: 1.0,
+        bonusCategory: 'CAFE',
+        speedDesc: '표준 걸음 (분당 80m)',
+        story: '"양재 본사 충전소에서 충전하는 동안, 시간에 쫓기지 않고 스페셜티 커피 한 잔 마시고 정확히 복귀하고 싶은 운전자"'
+      },
+      kids: {
+        label: '👨‍👩‍👧 아이와 함께',
+        walkMultiplier: 1.35,
+        bonusCategory: 'FOOD',
+        speedDesc: '아이 동반 걸음 (도보 1.3배)',
+        story: '"아이 걸음걸이에 맞춰 무리하지 않고 다녀올 수 있는 가까운 간식·식사·마트 코스가 필요한 가족 운전자"'
+      },
+      pet:  {
+        label: '🐕 반려동물 동반',
+        walkMultiplier: 1.2,
+        bonusCategory: 'WALK',
+        speedDesc: '산책 걸음 (야외·공원 우선)',
+        story: '"답답한 차 안 대신 충전 시간 동안 반려견과 매헌시민의숲 산책로나 야외 테라스 카페를 다녀오고 싶은 차주"'
+      },
+      work: {
+        label: '💻 비즈니스·업무',
+        walkMultiplier: 1.0,
+        bonusCategory: 'CAFE',
+        speedDesc: '노트북·콘센트 좌석 우선',
+        story: '"외근 중 양재 본사 충전소에 들러 급한 노트북 업무나 미팅 준비를 마치고 제시간에 출발해야 하는 직장인"'
+      }
+    };
+
+    // Real POIs around Hyundai Motor HQ (12 Heolleung-ro, Seocho-gu, Seoul) with demo distance/walk/crowd values
+    const PLACES_DB = [
+      {
+        id: 'p1',
+        name: '미니말레 커피로스터 양재본점',
+        address: '서초구 양재동 329-11',
+        category: 'CAFE',
+        categoryLabel: '카페·디저트',
+        distanceMeters: 280,
+        baseWalkMin: 4,
+        baseStayMin: 20,
+        takeoutStayMin: 7,
+        crowd: '보통',
+        tags: ['스페셜티 로스터리', '수제 쿠키·타르트', '야외 애견동반'],
+        suitableFor: ['solo', 'work', 'pet'],
+        tip: '현대차 본사 건너편 도보 4분 · 헬싱키 라떼 시그니처 및 빠른 테이크아웃 지원',
+        radarX: 238,
+        radarY: 72
+      },
+      {
+        id: 'p2',
+        name: '하나로마트 양재점',
+        address: '서초구 청계산로 10',
+        category: 'SHOP',
+        categoryLabel: '쇼핑·편의시설',
+        distanceMeters: 220,
+        baseWalkMin: 3,
+        baseStayMin: 16,
+        takeoutStayMin: 9,
+        crowd: '원활',
+        tags: ['본사 바로 뒤편', '간식·생필품', '베이커리 코너'],
+        suitableFor: ['solo', 'kids', 'work'],
+        tip: '현대·기아 본사 바로 뒷블록 위치 · 충전 중 간단한 장보기 및 음료 구매 최적',
+        radarX: 242,
+        radarY: 194
+      },
+      {
+        id: 'p3',
+        name: '매헌시민의숲 공원 산책로',
+        address: '서초구 매헌로 99',
+        category: 'WALK',
+        categoryLabel: '산책·힐링',
+        distanceMeters: 310,
+        baseWalkMin: 4,
+        baseStayMin: 18,
+        takeoutStayMin: 10,
+        crowd: '쾌적',
+        tags: ['숲길 산책', '반려견 동반 가능', '벤치 휴식'],
+        suitableFor: ['pet', 'kids', 'solo'],
+        tip: '울창한 메타세쿼이아 산책길 · 장거리 주행 중 스트레칭 및 반려견 산책 추천',
+        radarX: 68,
+        radarY: 132
+      },
+      {
+        id: 'p4',
+        name: '청계손국시 (양재동)',
+        address: '서초구 양재동 326-4',
+        category: 'FOOD',
+        categoryLabel: '빠른 식사·스낵',
+        distanceMeters: 340,
+        baseWalkMin: 4,
+        baseStayMin: 22,
+        takeoutStayMin: 12,
+        crowd: '보통',
+        tags: ['당귀닭곰탕·칼국수', '빠른 배식', '혼밥 가능'],
+        suitableFor: ['solo', 'kids', 'work'],
+        tip: '주문 즉시 빠르게 나오는 따뜻한 국시와 곰탕 · 40분 충전 중 든든한 식사 가능',
+        radarX: 268,
+        radarY: 126
+      },
+      {
+        id: 'p5',
+        name: '더 커피집 양재 (THE COFFEE ZiP)',
+        address: '서초구 매헌로 36 1층',
+        category: 'CAFE',
+        categoryLabel: '카페·디저트',
+        distanceMeters: 390,
+        baseWalkMin: 5,
+        baseStayMin: 18,
+        takeoutStayMin: 6,
+        crowd: '한산',
+        tags: ['수제 더치커피', '빠른 픽업', '조용한 분위기'],
+        suitableFor: ['solo', 'work'],
+        tip: '매헌로 대로변 위치 · 수제 시럽 라떼 및 더치커피 테이크아웃 시 6분 내 완료',
+        radarX: 116,
+        radarY: 96
+      },
+      {
+        id: 'p6',
+        name: '이마트 양재점 (매헌로 16)',
+        address: '서초구 매헌로 16',
+        category: 'SHOP',
+        categoryLabel: '쇼핑·편의시설',
+        distanceMeters: 440,
+        baseWalkMin: 6,
+        baseStayMin: 22,
+        takeoutStayMin: 12,
+        crowd: '보통',
+        tags: ['대형 마트', '푸드코트·약국', '가족 쇼핑'],
+        suitableFor: ['kids', 'solo', 'work'],
+        tip: '본사 인근 매헌로 위치 · 충전 시간에 맞춰 필요한 생필품 픽업 가능',
+        radarX: 102,
+        radarY: 194
+      },
+      {
+        id: 'p7',
+        name: '코스트코 양재점',
+        address: '서초구 양재대로 159',
+        category: 'SHOP',
+        categoryLabel: '쇼핑·편의시설',
+        distanceMeters: 620,
+        baseWalkMin: 8,
+        baseStayMin: 35,
+        takeoutStayMin: 18,
+        crowd: '혼잡',
+        tags: ['창고형 매장', '푸드코트 피자·떡볶이', '55분 이상 권장'],
+        suitableFor: ['solo', 'kids'],
+        tip: '매장 규모가 크고 계산 대기 시간이 있어 40분 급속 충전 시에는 시간 초과 주의',
+        radarX: 48,
+        radarY: 218
+      },
+      {
+        id: 'p8',
+        name: '떼르드카페 양재천점',
+        address: '서초구 양재천로 111',
+        category: 'CAFE',
+        categoryLabel: '카페·디저트',
+        distanceMeters: 840,
+        baseWalkMin: 11,
+        baseStayMin: 28,
+        takeoutStayMin: 12,
+        crowd: '보통',
+        tags: ['양재천 카페거리', '파리 스페셜티', '장시간 충전용'],
+        suitableFor: ['solo', 'pet', 'kids'],
+        tip: '양재천 산책로까지 왕복 도보 22분 소요 · 60분 이상 여유 충전 시에만 추천',
+        radarX: 64,
+        radarY: 38
+      }
+    ];
+
+    const appState = {
+      currentScreen: 1,
+      theme: 'NIGHT', // 'NIGHT' | 'DAY'
+      windowMode: 'SPLIT', // 'SPLIT' | 'FULL'
+      sdkMode: 'AUTO', // 'AUTO' | 'MANUAL'
+      initialAvailableMin: 40,
+      availableMin: 40,
+      deltaMin: 0,
+      bufferMin: 8,
+      companion: 'solo',
+      category: 'ALL',
+      hideInfeasible: false,
+      selectedPlaceId: 'p1',
+      stayMode: 'FULL', // 'FULL' | 'TAKEOUT'
+      climateAutoReserve: true,
+      driverTemp: 22.0
+    };
+
+    function formatClock(totalMinutes) {
+      const mins = ((totalMinutes % 1440) + 1440) % 1440;
+      const h = Math.floor(mins / 60);
+      const m = mins % 60;
+      return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+    }
+
+    function computePlaceMetrics(place) {
+      const profile = COMPANION_PROFILES[appState.companion] || COMPANION_PROFILES.solo;
+      const walkOneWay = Math.max(2, Math.round(place.baseWalkMin * profile.walkMultiplier));
+      const walkRoundTrip = walkOneWay * 2;
+      const isSelectedAndTakeout = (place.id === appState.selectedPlaceId && appState.stayMode === 'TAKEOUT');
+      const stayMin = isSelectedAndTakeout ? place.takeoutStayMin : place.baseStayMin;
+      const totalRequired = walkRoundTrip + stayMin + appState.bufferMin;
+      const spareMin = appState.availableMin - totalRequired;
+
+      const takeoutRequired = walkRoundTrip + place.takeoutStayMin + appState.bufferMin;
+      const takeoutSpareMin = appState.availableMin - takeoutRequired;
+
+      let status = 'FEASIBLE';
+      if (spareMin >= 5) {
+        status = 'FEASIBLE';
+      } else if (spareMin >= 0) {
+        status = 'TIGHT';
+      } else {
+        status = 'OVER';
+      }
+
+      let score = 100 - Math.abs(spareMin - 6);
+      if (place.suitableFor.includes(appState.companion)) score += 20;
+      if (place.category === profile.bonusCategory) score += 10;
+      if (status === 'OVER') score -= 80;
+
+      return {
+        walkOneWay,
+        walkRoundTrip,
+        stayMin,
+        totalRequired,
+        spareMin,
+        takeoutRequired,
+        takeoutSpareMin,
+        status,
+        score
+      };
+    }
+
+    function getFilteredAndSortedPlaces() {
+      return PLACES_DB
+        .filter(p => appState.category === 'ALL' ? true : p.category === appState.category)
+        .map(p => ({ place: p, metrics: computePlaceMetrics(p) }))
+        .filter(item => appState.hideInfeasible ? item.metrics.status !== 'OVER' : true)
+        .sort((a, b) => b.metrics.score - a.metrics.score);
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById('toastStatusText');
+      if (!el) return;
+      el.textContent = msg;
+    }
+
+    function renderThemeAndLayout() {
+      const htmlEl = document.documentElement;
+      const btnNight = document.getElementById('btnThemeNight');
+      const btnDay = document.getElementById('btnThemeDay');
+
+      if (appState.theme === 'DAY') {
+        htmlEl.classList.add('pleos-day');
+        btnDay.className = 'px-2.5 py-1 rounded-md font-bold bg-sky-500 text-slate-950 transition';
+        btnNight.className = 'px-2.5 py-1 rounded-md font-bold text-slate-300 hover:text-white transition';
+      } else {
+        htmlEl.classList.remove('pleos-day');
+        btnNight.className = 'px-2.5 py-1 rounded-md font-bold bg-sky-500 text-slate-950 transition';
+        btnDay.className = 'px-2.5 py-1 rounded-md font-bold text-slate-300 hover:text-white transition';
+      }
+
+      const drivingPane = document.getElementById('pleosDrivingViewPane');
+      const appPane = document.getElementById('pleosAppWindowPane');
+      const btnWinMode = document.getElementById('btnToggleWindowMode');
+      const btnExpand = document.getElementById('btnExpandAppWindow');
+
+      if (appState.windowMode === 'FULL') {
+        drivingPane.classList.add('hidden');
+        appPane.className = 'pleos-app-window lg:col-span-12 p-5 sm:p-7 flex flex-col justify-between';
+        btnWinMode.textContent = '📐 레이아웃: 유틸리티 풀스크린';
+        btnExpand.textContent = '⤡ 스플릿 뷰(Driving View 표시) 복귀';
+      } else {
+        drivingPane.classList.remove('hidden');
+        appPane.className = 'pleos-app-window lg:col-span-8 p-5 sm:p-7 flex flex-col justify-between';
+        btnWinMode.textContent = '📐 레이아웃: 스플릿 뷰 (Driving+App)';
+        btnExpand.textContent = '⤢ 유틸리티 풀스크린 전환';
+      }
+    }
+
+    function renderAll() {
+      renderThemeAndLayout();
+      renderLeftTelemetry();
+      renderScreenTabs();
+      renderScreen1();
+      renderScreen2();
+      renderScreen3();
+      renderScreen4();
+    }
+
+    function renderLeftTelemetry() {
+      const profile = COMPANION_PROFILES[appState.companion];
+      document.getElementById('companionBadge').textContent = profile.label;
+      document.getElementById('leftAvailableMinutes').textContent = appState.availableMin;
+
+      const deltaBadge = document.getElementById('leftDeltaBadge');
+      if (appState.deltaMin !== 0) {
+        deltaBadge.classList.remove('hidden', 'bg-rose-500/20', 'text-rose-300', 'bg-amber-500/20', 'text-amber-300');
+        if (appState.deltaMin < 0) {
+          deltaBadge.classList.add('bg-rose-500/20', 'text-rose-300');
+          deltaBadge.textContent = appState.deltaMin + '분 단축';
+        } else {
+          deltaBadge.classList.add('bg-amber-500/20', 'text-amber-300');
+          deltaBadge.textContent = '+' + appState.deltaMin + '분 지연';
+        }
+      } else {
+        deltaBadge.classList.add('hidden');
+      }
+
+      const endClock = formatClock(BASE_TIME_MINUTES + appState.availableMin);
+      const returnClock = formatClock(BASE_TIME_MINUTES + appState.availableMin - appState.bufferMin);
+      document.getElementById('leftTargetEndTime').textContent = endClock;
+      document.getElementById('leftReturnDeadline').textContent = returnClock;
+
+      const slider = document.getElementById('availableTimeSlider');
+      if (slider && Number(slider.value) !== appState.availableMin) {
+        slider.value = appState.availableMin;
+      }
+
+      const btnAuto = document.getElementById('btnSdkModeAuto');
+      const btnManual = document.getElementById('btnSdkModeManual');
+      const manualTag = document.getElementById('manualFallbackTag');
+      const sdkBadge = document.getElementById('sdkStatusBadge');
+
+      if (appState.sdkMode === 'AUTO') {
+        btnAuto.className = 'px-2.5 py-1 rounded-md font-semibold bg-sky-500 text-slate-950 transition';
+        btnManual.className = 'px-2.5 py-1 rounded-md font-semibold text-slate-300 hover:text-white transition';
+        manualTag.classList.add('hidden');
+        sdkBadge.textContent = 'SDK 미연동 · 데모 데이터';
+      } else {
+        btnManual.className = 'px-2.5 py-1 rounded-md font-semibold bg-amber-400 text-slate-950 transition';
+        btnAuto.className = 'px-2.5 py-1 rounded-md font-semibold text-slate-300 hover:text-white transition';
+        manualTag.classList.remove('hidden');
+        sdkBadge.textContent = '사용자 수동 시간 입력 모드 (Fallback)';
+      }
+
+      const selectedPlace = PLACES_DB.find(p => p.id === appState.selectedPlaceId) || PLACES_DB[0];
+      const m = computePlaceMetrics(selectedPlace);
+      const actualBuffer = appState.availableMin - (m.walkRoundTrip + m.stayMin);
+
+      document.getElementById('legendWalkOut').textContent = m.walkOneWay + '분';
+      document.getElementById('legendStay').textContent = m.stayMin + '분';
+      document.getElementById('legendWalkBack').textContent = m.walkOneWay + '분';
+      document.getElementById('legendBuffer').textContent = (actualBuffer >= 0 ? '+' + actualBuffer : actualBuffer) + '분';
+
+      const budgetStatusEl = document.getElementById('leftBudgetStatus');
+      if (actualBuffer >= appState.bufferMin) {
+        budgetStatusEl.textContent = '✓ 안전 여유 ' + actualBuffer + '분 확보';
+        budgetStatusEl.className = 'text-xs font-bold text-emerald-400';
+      } else if (actualBuffer >= 0) {
+        budgetStatusEl.textContent = '⚠️ 여유 빠듯함 (' + actualBuffer + '분)';
+        budgetStatusEl.className = 'text-xs font-bold text-amber-400';
+      } else {
+        budgetStatusEl.textContent = '🚨 충전시간 ' + Math.abs(actualBuffer) + '분 초과';
+        budgetStatusEl.className = 'text-xs font-bold text-rose-400';
+      }
+
+      const denom = Math.max(appState.availableMin, m.walkRoundTrip + m.stayMin);
+      const wWalk = Math.round((m.walkOneWay / denom) * 100);
+      const wStay = Math.round((m.stayMin / denom) * 100);
+      const wBuffer = Math.max(0, 100 - (wWalk * 2 + wStay));
+
+      document.getElementById('segWalkOut').style.width = wWalk + '%';
+      document.getElementById('segStay').style.width = wStay + '%';
+      document.getElementById('segWalkBack').style.width = wWalk + '%';
+      document.getElementById('segBuffer').style.width = wBuffer + '%';
+    }
+
+    function renderScreenTabs() {
+      const tabs = document.querySelectorAll('.screen-tab');
+      tabs.forEach(tab => {
+        const screenNum = Number(tab.getAttribute('data-screen'));
+        const badge = tab.querySelector('span');
+        if (screenNum === appState.currentScreen) {
+          tab.className = 'screen-tab flex items-center gap-2.5 px-3.5 py-3 rounded-2xl border text-left transition pleos-card-active relative';
+          badge.className = 'w-7 h-7 rounded-lg bg-sky-400 text-slate-950 font-extrabold text-xs flex items-center justify-center shrink-0';
+        } else {
+          tab.className = 'screen-tab flex items-center gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-800 bg-slate-900/60 text-left hover:border-slate-700 transition relative';
+          badge.className = 'w-7 h-7 rounded-lg bg-slate-800 text-slate-300 font-extrabold text-xs flex items-center justify-center shrink-0';
+        }
+      });
+
+      for (let i = 1; i <= 4; i++) {
+        const panel = document.getElementById('screenPanel' + i);
+        if (i === appState.currentScreen) {
+          panel.classList.remove('hidden');
+        } else {
+          panel.classList.add('hidden');
+        }
+      }
+
+      const alertDot = document.getElementById('tab4AlertDot');
+      if (appState.deltaMin !== 0 && appState.currentScreen !== 4) {
+        alertDot.classList.remove('hidden');
+      } else {
+        alertDot.classList.add('hidden');
+      }
+    }
+
+    function renderScreen1() {
+      const feasibleCount = PLACES_DB.filter(p => computePlaceMetrics(p).status !== 'OVER').length;
+      document.getElementById('s1FeasibleCount').textContent = feasibleCount;
+
+      if (appState.sdkMode === 'AUTO') {
+        document.getElementById('s1DataSourceTitle').textContent = '차량 데이터 시연';
+        document.getElementById('s1DataSourceTitle').className = 'text-base font-extrabold text-sky-400 mt-1';
+        document.getElementById('s1DataSourceDesc').textContent = 'SoC·충전 시간 시연값 (수동·시뮬레이션 가능)';
+      } else {
+        document.getElementById('s1DataSourceTitle').textContent = '사용자 수동 시간 입력 (Fallback)';
+        document.getElementById('s1DataSourceTitle').className = 'text-base font-extrabold text-amber-400 mt-1';
+        document.getElementById('s1DataSourceDesc').textContent = '좌측 슬라이더로 설정한 충전 시간 기준 계산';
+      }
+
+      document.querySelectorAll('.buffer-btn').forEach(btn => {
+        const val = Number(btn.getAttribute('data-buffer'));
+        if (val === appState.bufferMin) {
+          btn.className = 'buffer-btn flex-1 py-1.5 rounded-xl text-xs font-bold bg-sky-500 text-slate-950 transition';
+        } else {
+          btn.className = 'buffer-btn flex-1 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:text-white transition';
+        }
+      });
+
+      document.querySelectorAll('.companion-btn').forEach(btn => {
+        const key = btn.getAttribute('data-companion');
+        if (key === appState.companion) {
+          btn.className = 'companion-btn pleos-card pleos-card-active p-4 text-left';
+        } else {
+          btn.className = 'companion-btn pleos-card p-4 text-left';
+        }
+      });
+
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        const cat = btn.getAttribute('data-category');
+        if (cat === appState.category) {
+          btn.className = 'category-btn px-4 py-2.5 rounded-xl text-xs font-bold bg-sky-500 text-slate-950 transition';
+        } else {
+          btn.className = 'category-btn px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition';
+        }
+      });
+
+      const profile = COMPANION_PROFILES[appState.companion];
+      const storyEl = document.getElementById('s1PersonaStoryText');
+      if (storyEl && profile.story) {
+        storyEl.textContent = profile.story;
+      }
+      document.getElementById('s1SummaryText').textContent =
+        '가용 ' + appState.availableMin + '분 · ' + profile.label + ' · 안전 여유 ' + appState.bufferMin + '분';
+    }
+
+    function renderScreen2() {
+      document.getElementById('s2HeaderMinutes').textContent = appState.availableMin;
+      const items = getFilteredAndSortedPlaces();
+      const container = document.getElementById('placesCardContainer');
+      const radarGroup = document.getElementById('radarPinsGroup');
+
+      container.innerHTML = '';
+      radarGroup.innerHTML = '';
+
+      items.forEach(({ place, metrics }) => {
+        const isSelected = place.id === appState.selectedPlaceId;
+        let badgeHtml = '';
+        let pinColor = '#10B981';
+
+        if (metrics.status === 'FEASIBLE') {
+          badgeHtml = `<span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">+${metrics.spareMin}분 여유</span>`;
+          pinColor = '#10B981';
+        } else if (metrics.status === 'TIGHT') {
+          badgeHtml = `<span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/40">빠듯함 (+${metrics.spareMin}분)</span>`;
+          pinColor = '#F59E0B';
+        } else {
+          badgeHtml = `<span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-rose-500/20 text-rose-300 border border-rose-500/40">${Math.abs(metrics.spareMin)}분 초과</span>`;
+          pinColor = '#F43F5E';
+        }
+
+        const card = document.createElement('div');
+        card.className = `pleos-card p-4 cursor-pointer flex flex-col justify-between ${isSelected ? 'pleos-card-active' : ''} ${metrics.status === 'OVER' ? 'opacity-50' : ''}`;
+        card.innerHTML = `
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <span class="text-[11px] font-bold text-sky-400">[시연 데이터] ${place.categoryLabel} · ${place.distanceMeters}m · 혼잡도 ${place.crowd}</span>
+                <h4 class="text-base font-extrabold text-white mt-0.5">${place.name}</h4>
+                <span class="text-[11px] text-slate-400 block">${place.address}</span>
+              </div>
+              ${badgeHtml}
+            </div>
+
+            <div class="mt-3 flex items-center justify-between bg-slate-950/70 rounded-xl px-3 py-2 border border-slate-800/80 text-xs">
+              <span>왕복 도보 <strong class="text-white font-mono">${metrics.walkRoundTrip}분</strong></span>
+              <span class="text-slate-600">|</span>
+              <span>체류 <strong class="text-sky-300 font-mono">${metrics.stayMin}분</strong></span>
+              <span class="text-slate-600">|</span>
+              <span>총 소요 <strong class="text-white font-mono">${metrics.totalRequired}분</strong></span>
+            </div>
+          </div>
+
+          <div class="mt-2.5 pt-2 border-t border-slate-800/60 flex items-center justify-between text-xs">
+            <span class="text-slate-400 truncate">${place.tags.slice(0, 2).join(' · ')}</span>
+            <span class="font-extrabold ${isSelected ? 'text-sky-400' : 'text-slate-400'} shrink-0 ml-2">${isSelected ? '✓ 선택됨' : '선택'}</span>
+          </div>
+        `;
+        card.addEventListener('click', () => {
+          appState.selectedPlaceId = place.id;
+          renderAll();
+          showToast(`'${place.name}' (총 ${metrics.totalRequired}분 소요) 선택됨`);
+        });
+        container.appendChild(card);
+
+        // Update floating route summary card if selected
+        if (isSelected) {
+          const titleEl = document.getElementById('mapSelectedRouteTitle');
+          const subEl = document.getElementById('mapSelectedRouteSub');
+          if (titleEl) titleEl.textContent = place.name;
+          if (subEl) subEl.textContent = `편도 ${place.distanceMeters}m · 도보 ${metrics.walkOneWay}분 (왕복 ${metrics.walkRoundTrip}분)`;
+
+          // Draw active walking route polyline from Hyundai HQ (172, 132) to selected POI
+          const routeLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          const midX = Math.round((172 + place.radarX) / 2);
+          routeLine.setAttribute('d', `M 172 132 L ${midX} 132 L ${place.radarX} ${place.radarY}`);
+          routeLine.setAttribute('fill', 'none');
+          routeLine.setAttribute('stroke', '#6EA1C8');
+          routeLine.setAttribute('stroke-width', '2.8');
+          routeLine.setAttribute('stroke-dasharray', '5 3');
+          routeLine.setAttribute('stroke-linecap', 'round');
+          radarGroup.appendChild(routeLine);
+        }
+
+        // Calm semantic pin color
+        const calmPinColor = metrics.status === 'FEASIBLE' ? '#4D967B' : (metrics.status === 'TIGHT' ? '#C98F3E' : '#B85D5D');
+        const shortName = place.name.split(' ')[0];
+        const pillWidth = Math.max(46, shortName.length * 9 + 14);
+
+        const pinG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        pinG.style.cursor = 'pointer';
+        pinG.innerHTML = `
+          <rect x="${place.radarX - pillWidth / 2}" y="${place.radarY - 22}" width="${pillWidth}" height="15" rx="4" fill="${isSelected ? '#5B8FB9' : '#111621'}" fill-opacity="0.92" stroke="${calmPinColor}" stroke-width="${isSelected ? '1.8' : '1'}" />
+          <text x="${place.radarX}" y="${place.radarY - 12}" text-anchor="middle" fill="#F8FAFC" font-size="8" font-weight="${isSelected ? '800' : '600'}">${shortName}</text>
+          <circle cx="${place.radarX}" cy="${place.radarY}" r="${isSelected ? 6.5 : 4.5}" fill="${calmPinColor}" stroke="#0F172A" stroke-width="1.8" />
+        `;
+        pinG.addEventListener('click', () => {
+          appState.selectedPlaceId = place.id;
+          renderAll();
+        });
+        radarGroup.appendChild(pinG);
+      });
+    }
+
+    function renderScreen3() {
+      const place = PLACES_DB.find(p => p.id === appState.selectedPlaceId) || PLACES_DB[0];
+      const m = computePlaceMetrics(place);
+
+      document.getElementById('s3PlaceTitle').textContent = `${place.name} (${place.address}) — 활동 일정`;
+      document.getElementById('s3ActivityTip').textContent = place.tip;
+      document.getElementById('qrModalPlaceName').textContent = place.name;
+
+      const badge = document.getElementById('s3FeasibilityBadge');
+      const actualBuffer = appState.availableMin - (m.walkRoundTrip + m.stayMin);
+      if (actualBuffer >= appState.bufferMin) {
+        badge.className = 'px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+        badge.textContent = `✓ 충전 완료 ${actualBuffer}분 전 안전 복귀`;
+      } else if (actualBuffer >= 0) {
+        badge.className = 'px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/40';
+        badge.textContent = `⚠️ 충전 완료 ${actualBuffer}분 전 복귀 (빠듯함)`;
+      } else {
+        badge.className = 'px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-rose-500/20 text-rose-300 border border-rose-500/40';
+        badge.textContent = `🚨 충전 시간 ${Math.abs(actualBuffer)}분 초과! 재조정 권장`;
+      }
+
+      const t0 = BASE_TIME_MINUTES;
+      const t1 = t0 + m.walkOneWay;
+      const t2 = t1 + m.stayMin;
+      const t3 = t2 + m.walkOneWay;
+      const tEnd = t0 + appState.availableMin;
+
+      document.getElementById('qrModalDepartBackTime').textContent = formatClock(t2);
+
+      const stepsContainer = document.getElementById('s3TimelineSteps');
+      stepsContainer.innerHTML = `
+        <div class="pleos-card p-4 border-l-4 border-l-sky-500">
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>01 · 도보 이동</span>
+            <span class="font-mono text-sky-400 font-bold">${m.walkOneWay}분</span>
+          </div>
+          <div class="text-lg font-black text-white font-mono mt-1">${formatClock(t0)} → ${formatClock(t1)}</div>
+          <div class="text-xs text-slate-400 mt-1">본사 충전소 → ${place.distanceMeters}m</div>
+        </div>
+
+        <div class="pleos-card p-4 border-l-4 border-l-cyan-400">
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>02 · 매장 체류</span>
+            <span class="font-mono text-cyan-300 font-bold">${m.stayMin}분</span>
+          </div>
+          <div class="text-lg font-black text-white font-mono mt-1">${formatClock(t1)} ~ ${formatClock(t2)}</div>
+          <div class="text-xs text-slate-400 mt-1">${appState.stayMode === 'TAKEOUT' ? '⚡ 빠른 픽업/포장' : '☕ 매장 내 여유 체류'}</div>
+        </div>
+
+        <div class="pleos-card p-4 border-l-4 border-l-indigo-500">
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>03 · 복귀 출발</span>
+            <span class="font-mono text-indigo-400 font-bold">${m.walkOneWay}분</span>
+          </div>
+          <div class="text-lg font-black text-white font-mono mt-1">${formatClock(t2)} → ${formatClock(t3)}</div>
+          <div class="text-xs text-slate-400 mt-1">${formatClock(t2)} 매장 출발 권고</div>
+        </div>
+
+        <div class="pleos-card p-4 border-l-4 ${actualBuffer >= 0 ? 'border-l-emerald-400' : 'border-l-rose-500'}">
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>04 · 차량 복귀</span>
+            <span class="font-mono ${actualBuffer >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-bold">${actualBuffer >= 0 ? '+' + actualBuffer + '분 여유' : actualBuffer + '분 초과'}</span>
+          </div>
+          <div class="text-lg font-black text-white font-mono mt-1">${formatClock(t3)} (완료 ${formatClock(tEnd)})</div>
+          <div class="text-xs text-slate-400 mt-1">공조 ${appState.driverTemp.toFixed(1)}°C 화면 시연</div>
+        </div>
+      `;
+
+      const btnFull = document.getElementById('btnModeStayFull');
+      const btnTakeout = document.getElementById('btnModeTakeout');
+      if (appState.stayMode === 'FULL') {
+        btnFull.className = 'flex-1 py-2.5 px-3 rounded-xl text-xs font-bold bg-sky-500 text-slate-950 transition';
+        btnTakeout.className = 'flex-1 py-2.5 px-3 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition';
+        document.getElementById('s3ModeLabel').textContent = `매장 여유 체류 (${place.baseStayMin}분)`;
+      } else {
+        btnTakeout.className = 'flex-1 py-2.5 px-3 rounded-xl text-xs font-bold bg-sky-500 text-slate-950 transition';
+        btnFull.className = 'flex-1 py-2.5 px-3 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition';
+        document.getElementById('s3ModeLabel').textContent = `빠른 픽업/테이크아웃 (${place.takeoutStayMin}분)`;
+      }
+    }
+
+    function renderScreen4() {
+      const place = PLACES_DB.find(p => p.id === appState.selectedPlaceId) || PLACES_DB[0];
+      const m = computePlaceMetrics(place);
+      const banner = document.getElementById('s4AlertBanner');
+      const grid = document.getElementById('s4AlternativesGrid');
+
+      const actualBuffer = appState.availableMin - (m.walkRoundTrip + m.stayMin);
+
+      if (appState.deltaMin < 0) {
+        banner.className = 'pleos-card p-4 border-l-4 border-l-rose-500';
+        banner.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-500/20 text-rose-300">⚡ 충전 속도 상승 시뮬레이션 (${appState.deltaMin}분 단축)</span>
+              <h4 class="text-base font-extrabold text-white mt-1">충전 잔여 시간이 ${appState.initialAvailableMin}분 → <span class="text-rose-400 font-mono">${appState.availableMin}분</span>으로 단축되었습니다</h4>
+              <p class="text-xs text-slate-300 mt-0.5">기존 '${place.name}' 일정 유지 시 복귀 여유가 <strong>${actualBuffer}분</strong>이 됩니다. 아래 대안 카드를 눌러 일정을 조정하세요.</p>
+            </div>
+            <div class="text-right font-mono">
+              <div class="text-xs text-slate-400">변경된 권장 복귀 시각</div>
+              <div class="text-xl font-black text-rose-300">${formatClock(BASE_TIME_MINUTES + appState.availableMin - appState.bufferMin)}</div>
+            </div>
+          </div>
+        `;
+      } else if (appState.deltaMin > 0) {
+        banner.className = 'pleos-card p-4 border-l-4 border-l-amber-400';
+        banner.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-500/20 text-amber-300">⏳ 충전 전력 분배 시뮬레이션 (+${appState.deltaMin}분 지연)</span>
+              <h4 class="text-base font-extrabold text-white mt-1">충전 잔여 시간이 ${appState.initialAvailableMin}분 → <span class="text-amber-300 font-mono">${appState.availableMin}분</span>으로 늘어났습니다</h4>
+              <p class="text-xs text-slate-300 mt-0.5">복귀 여유 시간이 <strong>+${actualBuffer}분</strong>으로 넉넉해졌습니다. 더 여유로운 양재 주변 코스로 변경할 수 있습니다.</p>
+            </div>
+            <div class="text-right font-mono">
+              <div class="text-xs text-slate-400">변경된 권장 복귀 시각</div>
+              <div class="text-xl font-black text-amber-300">${formatClock(BASE_TIME_MINUTES + appState.availableMin - appState.bufferMin)}</div>
+            </div>
+          </div>
+        `;
+      } else {
+        banner.className = 'pleos-card p-4 border-l-4 border-l-sky-400';
+        banner.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-sky-500/20 text-sky-300">충전 시간 변동 시뮬레이션</span>
+              <h4 class="text-base font-extrabold text-white mt-1">현재 시연 충전 잔여 시간(<span class="text-sky-400 font-mono">${appState.availableMin}분</span>) 기준 활동 일정입니다</h4>
+              <p class="text-xs text-slate-300 mt-0.5">우측 상단의 <strong>[-12분 단축]</strong> 또는 <strong>[+15분 지연]</strong> 버튼을 눌러 실시간 추천 재계산을 확인해 보세요.</p>
+            </div>
+          </div>
+        `;
+      }
+
+      grid.innerHTML = '';
+
+      const takeoutTotal = m.walkRoundTrip + place.takeoutStayMin + appState.bufferMin;
+      const takeoutSpare = appState.availableMin - takeoutTotal;
+      const cardA = document.createElement('div');
+      cardA.className = 'pleos-card p-4 flex flex-col justify-between cursor-pointer';
+      cardA.innerHTML = `
+        <div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/20 text-sky-300">대안 01 · 체류 시간 단축</span>
+          <h5 class="text-sm font-extrabold text-white mt-1.5">${place.name} (포장 전환)</h5>
+          <p class="text-xs text-slate-400 mt-1">매장 체류(${place.baseStayMin}분) 대신 빠른 테이크아웃(${place.takeoutStayMin}분)으로 전환합니다.</p>
+        </div>
+        <div class="mt-3 pt-2.5 border-t border-slate-800 flex items-center justify-between text-xs">
+          <span class="font-mono text-emerald-400 font-bold">총 ${takeoutTotal}분 소요 (여유 +${Math.max(0, takeoutSpare + appState.bufferMin)}분)</span>
+          <span class="text-sky-400 font-extrabold">적용 →</span>
+        </div>
+      `;
+      cardA.addEventListener('click', () => {
+        appState.stayMode = 'TAKEOUT';
+        appState.currentScreen = 3;
+        renderAll();
+        showToast(`'${place.name}' 빠른 픽업 모드로 일정이 재조정되었습니다.`);
+      });
+      grid.appendChild(cardA);
+
+      const quickPlace = PLACES_DB.find(p => p.id === 'p2');
+      const qm = computePlaceMetrics(quickPlace);
+      const cardB = document.createElement('div');
+      cardB.className = 'pleos-card p-4 flex flex-col justify-between cursor-pointer';
+      cardB.innerHTML = `
+        <div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300">대안 02 · 본사 초근거리 변경</span>
+          <h5 class="text-sm font-extrabold text-white mt-1.5">${quickPlace.name} (도보 ${qm.walkOneWay}분)</h5>
+          <p class="text-xs text-slate-400 mt-1">현대차 본사 바로 뒤편 ${quickPlace.distanceMeters}m 거리 매장으로 변경해 이동 시간을 아낍니다.</p>
+        </div>
+        <div class="mt-3 pt-2.5 border-t border-slate-800 flex items-center justify-between text-xs">
+          <span class="font-mono text-emerald-400 font-bold">총 ${qm.totalRequired}분 소요</span>
+          <span class="text-sky-400 font-extrabold">변경 →</span>
+        </div>
+      `;
+      cardB.addEventListener('click', () => {
+        appState.selectedPlaceId = quickPlace.id;
+        appState.stayMode = 'FULL';
+        appState.currentScreen = 3;
+        renderAll();
+        showToast(`초근거리 '${quickPlace.name}' 일정으로 변경되었습니다.`);
+      });
+      grid.appendChild(cardB);
+
+      const longPlace = PLACES_DB.find(p => p.id === 'p6');
+      const lm = computePlaceMetrics(longPlace);
+      const cardC = document.createElement('div');
+      cardC.className = 'pleos-card p-4 flex flex-col justify-between cursor-pointer';
+      cardC.innerHTML = `
+        <div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300">대안 03 · 여유 시간 활용 코스</span>
+          <h5 class="text-sm font-extrabold text-white mt-1.5">${longPlace.name}</h5>
+          <p class="text-xs text-slate-400 mt-1">충전 지연 시 늘어난 시간을 활용하기 좋은 매헌로 대형 마트·편의시설입니다.</p>
+        </div>
+        <div class="mt-3 pt-2.5 border-t border-slate-800 flex items-center justify-between text-xs">
+          <span class="font-mono text-sky-400 font-bold">총 ${lm.totalRequired}분 소요</span>
+          <span class="text-sky-400 font-extrabold">변경 →</span>
+        </div>
+      `;
+      cardC.addEventListener('click', () => {
+        appState.selectedPlaceId = longPlace.id;
+        appState.stayMode = 'FULL';
+        appState.currentScreen = 3;
+        renderAll();
+        showToast(`여유 코스 '${longPlace.name}' 일정으로 재조정되었습니다.`);
+      });
+      grid.appendChild(cardC);
+    }
+
+    function triggerTimeSimulation(delta) {
+      if (delta === 0) {
+        appState.availableMin = appState.initialAvailableMin;
+        appState.deltaMin = 0;
+        appState.stayMode = 'FULL';
+        showToast('충전 잔여 시간이 기본 40분으로 초기화되었습니다.');
+      } else {
+        appState.deltaMin = delta;
+        appState.availableMin = Math.max(15, Math.min(75, appState.initialAvailableMin + delta));
+        appState.currentScreen = 4;
+        showToast(delta < 0
+          ? `충전 속도 상승 시뮬레이션: 잔여 시간이 ${appState.availableMin}분으로 단축되었습니다.`
+          : `충전 지연 시뮬레이션: 잔여 시간이 ${appState.availableMin}분으로 늘어났습니다.`);
+      }
+      renderAll();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('btnThemeNight').addEventListener('click', () => {
+        appState.theme = 'NIGHT';
+        renderAll();
+        showToast('야간(Dark) 테마가 적용되었습니다.');
+      });
+      document.getElementById('btnThemeDay').addEventListener('click', () => {
+        appState.theme = 'DAY';
+        renderAll();
+        showToast('주간(Light) 테마가 적용되었습니다.');
+      });
+
+      const toggleWindowFn = () => {
+        appState.windowMode = appState.windowMode === 'SPLIT' ? 'FULL' : 'SPLIT';
+        renderAll();
+        showToast(appState.windowMode === 'FULL'
+          ? '유틸리티 풀스크린 레이아웃으로 전환되었습니다.'
+          : '스플릿 뷰(Driving View + App Window)로 전환되었습니다.');
+      };
+      document.getElementById('btnToggleWindowMode').addEventListener('click', toggleWindowFn);
+      document.getElementById('btnExpandAppWindow').addEventListener('click', toggleWindowFn);
+
+      document.getElementById('btnGleoVoiceDemo').addEventListener('click', () => {
+        appState.companion = 'solo';
+        appState.category = 'CAFE';
+        appState.currentScreen = 2;
+        renderAll();
+        showToast('🎙️ Gleo AI (시연): "현대차 양재 본사 주변 40분 내 다녀올 수 있는 카페를 추천합니다."');
+      });
+
+      document.getElementById('btnDriverTempDown').addEventListener('click', () => {
+        appState.driverTemp = Math.max(18.0, appState.driverTemp - 0.5);
+        document.getElementById('gnbDriverTemp').textContent = appState.driverTemp.toFixed(1) + '°';
+        document.getElementById('leftTargetTempText').textContent = appState.driverTemp.toFixed(1) + '°C';
+        renderScreen3();
+        showToast(`[시연 토글] 운전석 표시 온도가 ${appState.driverTemp.toFixed(1)}°C로 변경되었습니다 (차량 미연동).`);
+      });
+      document.getElementById('btnDriverTempUp').addEventListener('click', () => {
+        appState.driverTemp = Math.min(28.0, appState.driverTemp + 0.5);
+        document.getElementById('gnbDriverTemp').textContent = appState.driverTemp.toFixed(1) + '°';
+        document.getElementById('leftTargetTempText').textContent = appState.driverTemp.toFixed(1) + '°C';
+        renderScreen3();
+        showToast(`[시연 토글] 운전석 표시 온도가 ${appState.driverTemp.toFixed(1)}°C로 변경되었습니다 (차량 미연동).`);
+      });
+      document.getElementById('btnGnbAppLibrary').addEventListener('click', () => {
+        appState.currentScreen = 1;
+        renderAll();
+      });
+      document.getElementById('btnGnbNavi').addEventListener('click', () => {
+        appState.currentScreen = 2;
+        renderAll();
+      });
+      document.getElementById('btnGnbEvMoment').addEventListener('click', () => {
+        appState.currentScreen = 1;
+        renderAll();
+      });
+      document.getElementById('btnGnbAppMarket').addEventListener('click', () => {
+        document.getElementById('proposalModal').classList.remove('hidden');
+      });
+
+      document.querySelectorAll('.screen-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          appState.currentScreen = Number(tab.getAttribute('data-screen'));
+          renderAll();
+        });
+      });
+
+      document.getElementById('btnGoScreen2').addEventListener('click', () => {
+        appState.currentScreen = 2;
+        renderAll();
+      });
+      document.getElementById('btnBackScreen1').addEventListener('click', () => {
+        appState.currentScreen = 1;
+        renderAll();
+      });
+      document.getElementById('btnGoScreen3').addEventListener('click', () => {
+        appState.currentScreen = 3;
+        renderAll();
+      });
+      document.getElementById('btnBackScreen2').addEventListener('click', () => {
+        appState.currentScreen = 2;
+        renderAll();
+      });
+      document.getElementById('btnGoScreen4').addEventListener('click', () => {
+        appState.currentScreen = 4;
+        renderAll();
+      });
+      document.getElementById('btnBackScreen3').addEventListener('click', () => {
+        appState.currentScreen = 3;
+        renderAll();
+      });
+
+      document.getElementById('btnSdkModeAuto').addEventListener('click', () => {
+        appState.sdkMode = 'AUTO';
+        renderAll();
+        showToast('차량 데이터 시연 모드로 전환되었습니다 (SDK 미연동 · 시연값 표시).');
+      });
+      document.getElementById('btnSdkModeManual').addEventListener('click', () => {
+        appState.sdkMode = 'MANUAL';
+        renderAll();
+        showToast('수동 시간 입력(Fallback) 모드로 전환되었습니다.');
+      });
+
+      document.getElementById('availableTimeSlider').addEventListener('input', (e) => {
+        const val = Number(e.target.value);
+        appState.sdkMode = 'MANUAL';
+        appState.availableMin = val;
+        appState.deltaMin = val - appState.initialAvailableMin;
+        renderAll();
+      });
+
+      document.querySelectorAll('.buffer-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.bufferMin = Number(btn.getAttribute('data-buffer'));
+          renderAll();
+          showToast(`안전 복귀 여유 시간이 ${appState.bufferMin}분으로 설정되었습니다.`);
+        });
+      });
+
+      document.querySelectorAll('.companion-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.companion = btn.getAttribute('data-companion');
+          renderAll();
+          showToast(`동승 상황이 '${COMPANION_PROFILES[appState.companion].label}'로 반영되었습니다.`);
+        });
+      });
+
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.category = btn.getAttribute('data-category');
+          renderAll();
+        });
+      });
+
+      document.getElementById('chkHideInfeasible').addEventListener('change', (e) => {
+        appState.hideInfeasible = e.target.checked;
+        renderAll();
+      });
+
+      document.getElementById('btnModeStayFull').addEventListener('click', () => {
+        appState.stayMode = 'FULL';
+        renderAll();
+      });
+      document.getElementById('btnModeTakeout').addEventListener('click', () => {
+        appState.stayMode = 'TAKEOUT';
+        renderAll();
+      });
+
+      document.getElementById('btnSimShorten').addEventListener('click', () => triggerTimeSimulation(-12));
+      document.getElementById('btnSimExtend').addEventListener('click', () => triggerTimeSimulation(15));
+      document.getElementById('btnSimReset').addEventListener('click', () => triggerTimeSimulation(0));
+      document.getElementById('btnSimShortenMobile').addEventListener('click', () => triggerTimeSimulation(-12));
+      document.getElementById('btnSimExtendMobile').addEventListener('click', () => triggerTimeSimulation(15));
+      document.getElementById('btnSimResetMobile').addEventListener('click', () => triggerTimeSimulation(0));
+      document.getElementById('btnS4TriggerShorten').addEventListener('click', () => triggerTimeSimulation(-12));
+      document.getElementById('btnS4TriggerExtend').addEventListener('click', () => triggerTimeSimulation(15));
+
+      document.getElementById('btnApplyBestAlternative').addEventListener('click', () => {
+        if (appState.deltaMin < 0) {
+          appState.stayMode = 'TAKEOUT';
+        } else {
+          appState.stayMode = 'FULL';
+        }
+        appState.currentScreen = 3;
+        renderAll();
+        showToast('최적 대안이 활동 일정(03)에 반영되었습니다.');
+      });
+
+      document.getElementById('btnToggleClimate').addEventListener('click', (e) => {
+        appState.climateAutoReserve = !appState.climateAutoReserve;
+        const btn = e.currentTarget;
+        if (appState.climateAutoReserve) {
+          btn.textContent = '시연 ON';
+          btn.className = 'px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-sky-500 text-slate-950 transition';
+          showToast('공조 제어 화면 시연 토글 ON (실제 차량 제어 미연동)');
+        } else {
+          btn.textContent = '시연 OFF';
+          btn.className = 'px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-slate-800 text-slate-400 transition';
+          showToast('공조 제어 화면 시연 토글 OFF (실제 차량 제어 미연동)');
+        }
+      });
+
+      const proposalModal = document.getElementById('proposalModal');
+      document.getElementById('btnOpenProposalModal').addEventListener('click', () => {
+        proposalModal.classList.remove('hidden');
+      });
+      document.getElementById('btnCloseProposalModal').addEventListener('click', () => {
+        proposalModal.classList.add('hidden');
+      });
+      document.getElementById('btnCopyProposal').addEventListener('click', () => {
+        const text = document.getElementById('proposalTextContent').innerText;
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          const btn = document.getElementById('btnCopyProposal');
+          btn.textContent = '✓ 복사 완료!';
+          setTimeout(() => { btn.textContent = '📋 기획서 전문 복사'; }, 2000);
+        } catch (err) {
+          showToast('복사 완료');
+        }
+      });
+
+      const btnNaviTtsDemo = document.getElementById('btnNaviTtsDemo');
+      if (btnNaviTtsDemo) {
+        btnNaviTtsDemo.addEventListener('click', () => {
+          const place = PLACES_DB.find(p => p.id === appState.selectedPlaceId) || PLACES_DB[0];
+          const m = computePlaceMetrics(place);
+          const departBackClock = formatClock(BASE_TIME_MINUTES + m.walkOneWay + m.stayMin);
+          showToast(`🔊 [안내 문구 시연 · 실제 내비 미연동] "${place.name}" 선택. ${departBackClock} 출발 권고 (경유지 미전송).`);
+        });
+      }
+
+      // ==================== LIVE POI API (OpenStreetMap Overpass around Hyundai HQ 37.4639, 127.0428) ====================
+      const btnFetchLivePoi = document.getElementById('btnFetchLivePoi');
+      if (btnFetchLivePoi) {
+        btnFetchLivePoi.addEventListener('click', async () => {
+          btnFetchLivePoi.textContent = '⏳ 양재 본사 반경 600m 실시간 검색 중...';
+          showToast('🌐 퍼블릭 네트워크 외부 장소 API(Overpass OSM)로 양재 본사 주변 실시간 POI를 조회합니다...');
+          try {
+            const query = `[out:json][timeout:6];(node["amenity"~"cafe|restaurant|fast_food"](around:650,37.4639,127.0428);node["shop"~"supermarket|convenience|bakery"](around:650,37.4639,127.0428););out body 8;`;
+            const res = await fetch('https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(query));
+            if (!res.ok) throw new Error('API status ' + res.status);
+            const data = await res.json();
+            if (data && Array.isArray(data.elements) && data.elements.length >= 3) {
+              const liveNodes = data.elements.filter(el => el.tags && (el.tags['name:ko'] || el.tags.name)).slice(0, 6);
+              liveNodes.forEach((node, idx) => {
+                const name = node.tags['name:ko'] || node.tags.name;
+                // Calculate rough distance from Hyundai HQ (37.4639, 127.0428)
+                const dLat = (node.lat - 37.4639) * 111000;
+                const dLon = (node.lon - 127.0428) * 88000;
+                const dist = Math.max(120, Math.min(750, Math.round(Math.sqrt(dLat * dLat + dLon * dLon))));
+                const walkMin = Math.max(2, Math.round(dist / 75));
+                const amenity = node.tags.amenity || node.tags.shop || 'cafe';
+                let cat = 'CAFE';
+                let catLabel = '카페·디저트 (실시간 API)';
+                if (amenity === 'restaurant' || amenity === 'fast_food') {
+                  cat = 'FOOD';
+                  catLabel = '빠른 식사 (실시간 API)';
+                } else if (amenity === 'supermarket' || amenity === 'convenience') {
+                  cat = 'SHOP';
+                  catLabel = '쇼핑·편의 (실시간 API)';
+                }
+                if (PLACES_DB[idx]) {
+                  PLACES_DB[idx].name = name;
+                  PLACES_DB[idx].category = cat;
+                  PLACES_DB[idx].categoryLabel = catLabel;
+                  PLACES_DB[idx].distanceMeters = dist;
+                  PLACES_DB[idx].baseWalkMin = walkMin;
+                  PLACES_DB[idx].tags = ['🌐 실시간 API 수신', '양재 본사 반경', amenity.toUpperCase()];
+                }
+              });
+              renderAll();
+              btnFetchLivePoi.textContent = '✓ 실시간 장소 API 반영 완료';
+              showToast(`🌐 양재 본사 주변 실시간 POI ${liveNodes.length}곳 데이터를 성공적으로 불러와 시간 예산을 재계산했습니다!`);
+            } else {
+              throw new Error('Insufficient live nodes');
+            }
+          } catch (err) {
+            btnFetchLivePoi.textContent = '✓ 양재 본사 검증 데이터 유지됨';
+            showToast('양재 본사 주변 사전 검증된 8개 실제 매장 데이터로 시간 예산을 유지합니다.');
+          }
+        });
+      }
+
+      // ==================== REAL QR GENERATOR & LIVE MOBILE COUNTDOWN + WEB NOTIFICATION ====================
+      let countdownTimerId = null;
+      let remainingCountdownSec = 24 * 60;
+
+      function updateRealQrCode() {
+        const place = PLACES_DB.find(p => p.id === appState.selectedPlaceId) || PLACES_DB[0];
+        const m = computePlaceMetrics(place);
+        const departBackClock = formatClock(BASE_TIME_MINUTES + m.walkOneWay + m.stayMin);
+        remainingCountdownSec = m.stayMin * 60;
+        const cdEl = document.getElementById('qrLiveCountdown');
+        if (cdEl) {
+          cdEl.textContent = String(m.stayMin).padStart(2, '0') + ':00';
+        }
+
+        const baseUrl = window.location.href.split('?')[0];
+        const mobileTargetUrl = `${baseUrl}?mobile=1&place=${encodeURIComponent(place.name)}&depart=${encodeURIComponent(departBackClock)}&stay=${m.stayMin}&walk=${m.walkOneWay}`;
+        const canvas = document.getElementById('realQrCanvas');
+        if (canvas && window.QRious) {
+          new window.QRious({
+            element: canvas,
+            value: mobileTargetUrl,
+            size: 136,
+            level: 'M',
+            background: '#FFFFFF',
+            foreground: '#0F172A'
+          });
+        }
+      }
+
+      function playAlertChime() {
+        try {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (!AudioCtx) return;
+          const ctx = new AudioCtx();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+          osc.frequency.setValueAtTime(880.0, ctx.currentTime + 0.14); // A5
+          gain.gain.setValueAtTime(0.18, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.45);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.45);
+        } catch (e) {}
+      }
+
+      const qrModal = document.getElementById('qrModal');
+      document.getElementById('btnOpenQrModal').addEventListener('click', () => {
+        updateRealQrCode();
+        qrModal.classList.remove('hidden');
+      });
+      document.getElementById('btnCloseQrModal').addEventListener('click', () => {
+        if (countdownTimerId) { clearInterval(countdownTimerId); countdownTimerId = null; }
+        qrModal.classList.add('hidden');
+      });
+      document.getElementById('btnConfirmQrModal').addEventListener('click', () => {
+        if (countdownTimerId) { clearInterval(countdownTimerId); countdownTimerId = null; }
+        qrModal.classList.add('hidden');
+      });
+
+      const btnStartLiveCountdown = document.getElementById('btnStartLiveCountdown');
+      if (btnStartLiveCountdown) {
+        btnStartLiveCountdown.addEventListener('click', () => {
+          if (countdownTimerId) clearInterval(countdownTimerId);
+          showToast('⏱️ 실시간 복귀 카운트다운 타이머가 시작되었습니다.');
+          countdownTimerId = setInterval(() => {
+            if (remainingCountdownSec > 0) {
+              remainingCountdownSec -= 1;
+              const mm = String(Math.floor(remainingCountdownSec / 60)).padStart(2, '0');
+              const ss = String(remainingCountdownSec % 60).padStart(2, '0');
+              const cdEl = document.getElementById('qrLiveCountdown');
+              if (cdEl) cdEl.textContent = `${mm}:${ss}`;
+            } else {
+              clearInterval(countdownTimerId);
+              countdownTimerId = null;
+            }
+          }, 1000);
+        });
+      }
+
+      const btnTestPushNotify = document.getElementById('btnTestPushNotify');
+      if (btnTestPushNotify) {
+        btnTestPushNotify.addEventListener('click', () => {
+          const place = PLACES_DB.find(p => p.id === appState.selectedPlaceId) || PLACES_DB[0];
+          const m = computePlaceMetrics(place);
+          const departBackClock = formatClock(BASE_TIME_MINUTES + m.walkOneWay + m.stayMin);
+          playAlertChime();
+          const msg = `[EV MOMENT 복귀 알림] 지금 '${place.name}'에서 출발하셔야 충전 완료 전(${departBackClock} 출발 권고) 여유 있게 복귀합니다.`;
+          showToast('🔔 ' + msg);
+          if ('Notification' in window) {
+            if (Notification.permission === 'granted') {
+              new Notification('EV MOMENT 차량 복귀 알림', { body: msg });
+            } else if (Notification.permission !== 'denied') {
+              Notification.requestPermission().then(p => {
+                if (p === 'granted') new Notification('EV MOMENT 차량 복귀 알림', { body: msg });
+              });
+            }
+          }
+          // If running inside Android Pleos WebView Bridge, also trigger native TTS/Notification
+          if (window.PleosBridge && typeof window.PleosBridge.speakTts === 'function') {
+            window.PleosBridge.speakTts(msg);
+          }
+        });
+      }
+
+      // ==================== ANDROID PLEOS SDK WEBVIEW BRIDGE HOOK ====================
+      // Receives values from the demo MainActivity bridge; actual Vehicle SDK / Virtual Console subscription is not implemented.
+      window.onPleosVehicleUpdate = function(socPercent, remainingMinutes, gearState) {
+        if (typeof socPercent === 'number') {
+          const socEl = document.getElementById('leftSocCurrent');
+          if (socEl) socEl.textContent = socPercent + '%';
+        }
+        if (typeof remainingMinutes === 'number' && remainingMinutes >= 10) {
+          const delta = remainingMinutes - appState.initialAvailableMin;
+          triggerTimeSimulation(delta);
+        }
+        showToast(`📡 [시연용 브리지 입력 · SDK 미연동] SoC ${socPercent}% · 잔여 ${remainingMinutes}분 · 기어 ${gearState || 'P'} 반영`);
+      };
+
+      // Check if opened via Mobile QR Scan (?mobile=1)
+      try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('mobile') === '1') {
+          const pName = params.get('place') || '미니말레 커피로스터 양재본점';
+          const dep = params.get('depart') || '16:08';
+          const stay = Number(params.get('stay')) || 20;
+          document.getElementById('qrModalPlaceName').textContent = pName;
+          document.getElementById('qrModalDepartBackTime').textContent = dep;
+          remainingCountdownSec = stay * 60;
+          qrModal.classList.remove('hidden');
+          btnStartLiveCountdown.click();
+        }
+      } catch (e) {}
+
+      renderAll();
+    });
+  </script>
+</body>
+</html>
